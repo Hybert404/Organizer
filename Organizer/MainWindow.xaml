@@ -10,7 +10,9 @@
     <Grid>
         <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="41" Width="98" FontSize="22"/>
         <Button Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="Button_Click" Height="31" FontSize="16"/>
-        <TextBlock x:Name="TextBlock1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Margin="340,145,340,245" Width="112" FontSize="22" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlock1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="112" TextAlignment="Center" Height="97" Margin="0,84,0,0"/>
+        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="540,15,61,39"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="210,323,0,0" VerticalAlignment="Top" Height="38" Width="93" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
