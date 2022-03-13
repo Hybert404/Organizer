@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Interop;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
+
 
 
 namespace Organizer
@@ -23,14 +11,21 @@ namespace Organizer
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
-    
+
     public partial class MainWindow : Window
     {
-
+        private System.Windows.Forms.NotifyIcon m_notifyIcon;
         public MainWindow()
         {
             InitializeComponent();
-            
+            m_notifyIcon = new System.Windows.Forms.NotifyIcon
+            {
+                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
+                BalloonTipTitle = "The App",
+                Text = "The App",
+                Icon = new System.Drawing.Icon("TheAppIcon.ico")
+            };
+            m_notifyIcon.Click += new EventHandler(m_notifyIcon_Click);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -95,7 +90,7 @@ namespace Organizer
                 TestBox.Items.Add(s.ProcessName);
                 Process.Start(s.ProcessName);
             }
-            catch 
+            catch
             {
                 DebugBox.Items.Add("Nie można uruchomiń procesu");
             }
@@ -120,6 +115,45 @@ namespace Organizer
             {
                 DebugBox.Items.Add("Nie można zamknąć procesu");
             }
+        }
+
+        //void OnClose(object sender, CancelEventArgs args)
+        //{
+        //    m_notifyIcon.Dispose();
+        //    m_notifyIcon = null;
+        //}
+
+        private WindowState m_storedWindowState = WindowState.Normal;
+        void OnStateChanged(object sender, EventArgs args)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                Hide();
+                if (m_notifyIcon != null)
+                    m_notifyIcon.ShowBalloonTip(2000);
+            }
+            else
+                m_storedWindowState = WindowState;
+        }
+        void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            CheckTrayIcon();
+        }
+
+        void m_notifyIcon_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = m_storedWindowState;
+        }
+        void CheckTrayIcon()
+        {
+            ShowTrayIcon(!IsVisible);
+        }
+
+        void ShowTrayIcon(bool show)
+        {
+            if (m_notifyIcon != null)
+                m_notifyIcon.Visible = show;
         }
     }
 

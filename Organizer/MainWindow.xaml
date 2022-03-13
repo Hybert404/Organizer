@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Organizer"
         mc:Ignorable="d"
-        ShowInTaskbar="False" 
+        ShowInTaskbar="True" 
+        StateChanged="OnStateChanged" 
+        IsVisibleChanged="OnIsVisibleChanged"
         Title="Organizer" Height="450" Width="800">
     <Grid>
         <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="41" Width="98" FontSize="22"/>
