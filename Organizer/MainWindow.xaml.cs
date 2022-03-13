@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
+
 namespace Organizer
 {
     /// <summary>
@@ -34,48 +35,92 @@ namespace Organizer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TextBlock1.Text == "Hello")
+            if (TextBlock1.Text == "Hello" || TextBlock1.Text == "Nie klikać")
             {
                 TextBlock1.Text = "World";
-                Process[] localByName = Process.GetProcessesByName("notepad");
+                //Process[] localByName = Process.GetProcessesByName("notepad");
             }
             else
             {
                 TextBlock1.Text = "Hello";
-                ListProcesses();
+                //ListProcesses();
 
             }
         }
-        private void ListProcesses()
-        {
-            Process[] processCollection = Process.GetProcesses();
-            foreach (Process p in processCollection)
-            {
-                ListBox.Items.Add(p);
-            }
-        }
+        //private void ListProcesses()
+        //{
+        //    Process[] processCollection = Process.GetProcesses();
+        //    foreach (Process p in processCollection)
+        //    {
+        //        ListBox.Items.Add(p);
+        //    }
+        //}
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ListProcBttn_Click(object sender, RoutedEventArgs e)
         {
             GetApplications();
+            //GetWindows();
         }
 
-        public static void GetApplications()
+        public void GetApplications()
         {
-            StringBuilder sb = new StringBuilder();
+            List<Process> procList = new List<Process>();
             foreach (Process p in Process.GetProcesses("."))
             {
                 try
                 {
                     if (p.MainWindowTitle.Length > 0)
                     {
-                        Console.WriteLine("Window Title:" + p.MainWindowTitle.ToString());
-                        Console.WriteLine("Process Name:" + p.ProcessName.ToString());
+                        procList.Add(p);
                     }
                 }
                 catch { }
             }
+            ListBox.ItemsSource = procList;
+        }
+
+        public void GetWindows()
+        {
+            foreach (Window window in App.Current.Windows)
+            {
+                ListBox.Items.Add(window.Title);
+            }
+        }
+
+        private void RunBttn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var s = ListBox.SelectedItem as Process;
+                TestBox.Items.Add(s.ProcessName);
+                Process.Start(s.ProcessName);
+            }
+            catch 
+            {
+                DebugBox.Items.Add("Nie można uruchomiń procesu");
+            }
+        }
+
+        private void KillBttn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var s = ListBox.SelectedItem as Process;
+                TestBox.Items.Add(s.ProcessName);
+                if (s.ProcessName == "devenv")
+                {
+                    TestBox.Items.Add("Próbujesz zakończyć proces Visual Studio, da się, ale lepiej tego nie robić");
+                }
+                else
+                {
+                    s.Kill();
+                }
+            }
+            catch
+            {
+                DebugBox.Items.Add("Nie można zamknąć procesu");
+            }
         }
     }
-    
+
 }

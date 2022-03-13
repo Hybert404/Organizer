@@ -9,10 +9,29 @@
         Title="Organizer" Height="450" Width="800">
     <Grid>
         <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="41" Width="98" FontSize="22"/>
-        <Button Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="Button_Click" Height="31" FontSize="16"/>
+        <Button Content="Nie klikać" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="Button_Click" Height="31" FontSize="16"/>
         <TextBlock x:Name="TextBlock1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="112" TextAlignment="Center" Height="97" Margin="0,84,0,0"/>
-        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="540,15,61,39"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="210,323,0,0" VerticalAlignment="Top" Height="38" Width="93" Click="Button_Click_1"/>
+        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="484,98,27,73">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="ListProcBttn" Content="Listuj procesy" HorizontalAlignment="Left" Margin="484,366,0,0" VerticalAlignment="Top" Height="38" Width="83" Click="ListProcBttn_Click"/>
+        <Button x:Name="RunBttn" Content="Uruchom&#xA;proces ponownie" HorizontalAlignment="Left" Margin="572,366,0,0" VerticalAlignment="Top" Height="38" Width="103" Click="RunBttn_Click"/>
+        <ListBox x:Name="TestBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,98,533,201"/>
+        <Label Content="Procesy uruchomione ponownie" HorizontalAlignment="Left" Margin="25,66,0,0" VerticalAlignment="Top"/>
+        <Label Content="Procesy działające" HorizontalAlignment="Left" Margin="484,66,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="KillBttn" Content="Zamknij proces" HorizontalAlignment="Left" Margin="680,366,0,0" VerticalAlignment="Top" Height="38" Width="93" Click="KillBttn_Click"/>
+        <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,356,505,30"/>
 
     </Grid>
 </Window>
