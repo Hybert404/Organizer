@@ -13,7 +13,7 @@
         <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="41" Width="98" FontSize="22"/>
         <Button Content="Nie klikać" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="Button_Click" Height="31" FontSize="16"/>
         <TextBlock x:Name="TextBlock1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="112" TextAlignment="Center" Height="97" Margin="0,84,0,0"/>
-        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="484,98,27,73">
+        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="484,98,27,73" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

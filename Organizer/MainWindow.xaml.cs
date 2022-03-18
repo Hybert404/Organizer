@@ -155,6 +155,7 @@ namespace Organizer
             if (m_notifyIcon != null)
                 m_notifyIcon.Visible = show;
         }
+
     }
 
 }
