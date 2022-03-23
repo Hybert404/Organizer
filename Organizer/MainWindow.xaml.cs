@@ -25,7 +25,6 @@ namespace Organizer
                 Text = "The App",
                 Icon = Properties.Resources.AppIcon
             };
-            notifyIcon.Click += new EventHandler(notifyIcon_Click);
             this.notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(notifyIcon_Click);
         }
 
@@ -94,11 +93,11 @@ namespace Organizer
             }
         }
 
-        //void OnClose(object sender, CancelEventArgs args)
-        //{
-        //    notifyIcon.Dispose();
-        //    notifyIcon = null;
-        //}
+        void OnClose(object sender, EventArgs args)
+        {
+            notifyIcon.Dispose();
+            notifyIcon = null;
+        }
 
         private WindowState storedWindowState = WindowState.Normal;
         void OnStateChanged(object sender, EventArgs args)
@@ -106,31 +105,35 @@ namespace Organizer
             if (WindowState == WindowState.Minimized)
             {
                 Hide();
-                if (notifyIcon != null)
-                    notifyIcon.ShowBalloonTip(2000);
             }
             else
                 storedWindowState = WindowState;
         }
         void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
-            CheckTrayIcon();
+            if (notifyIcon != null)
+                notifyIcon.Visible = !IsVisible;
         }
 
-        void notifyIcon_Click(object sender, EventArgs e)
+        void notifyIcon_Click(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                ContextMenu menu = (ContextMenu)this.FindResource("NotifierContextMenu");
+                menu.IsOpen = true;
+            }
+        }
+
+        private void Menu_Close(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Closing app");
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void OpenSettings(object sender, RoutedEventArgs e)
         {
             Show();
             WindowState = storedWindowState;
-        }
-        void CheckTrayIcon()
-        {
-            ShowTrayIcon(!IsVisible);
-        }
-
-        void ShowTrayIcon(bool show)
-        {
-            if (notifyIcon != null)
-                notifyIcon.Visible = show;
         }
 
     }
