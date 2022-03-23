@@ -20,10 +20,10 @@
             <MenuItem Header="Open Settings" Click="OpenSettings"/>
         </ContextMenu>
     </Window.Resources>
-    
+
     <Grid x:Name="Okno">
         <Label Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,10,0,0" Height="41" Width="98" FontSize="22"/>
-        <TextBlock x:Name="TextBlock1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="112" TextAlignment="Center" Height="97" Margin="0,84,0,0"/>
+        <TextBlock x:Name="TextBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="112" TextAlignment="Center" Height="72" Margin="25,252,0,0"/>
         <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="484,98,27,73" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -45,5 +45,22 @@
         <Label Content="Procesy działające" HorizontalAlignment="Left" Margin="484,66,0,0" VerticalAlignment="Top"/>
         <Button x:Name="KillBttn" Content="Zamknij proces" HorizontalAlignment="Left" Margin="680,366,0,0" VerticalAlignment="Top" Height="38" Width="93" Click="KillBttn_Click"/>
         <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,356,505,30"/>
+        <ListBox x:Name="listwyb" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="284,98,364,99">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Procesy do uruchomienia&#xD;&#xA;" HorizontalAlignment="Left" Margin="284,66,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Button x:Name="Przesun" Content="&lt;" HorizontalAlignment="Left" Height="25" Margin="441,125,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click"/>
+        <Button x:Name="uruchombutt" Content="Uruchom" HorizontalAlignment="Left" Height="24" Margin="330,340,0,0" VerticalAlignment="Top" Width="70" Click="uruchombutt_Click"/>
     </Grid>
 </Window>

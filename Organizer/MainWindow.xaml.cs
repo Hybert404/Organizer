@@ -136,6 +136,36 @@ namespace Organizer
             WindowState = storedWindowState;
         }
 
-    }
+        private void Przesun_Click(object sender, RoutedEventArgs e)
+        {
+            List<Process> procList = new List<Process>();
+            foreach (Process p in listwyb.Items)
+            {
+                procList.Add(p);
+            }
 
+            {
+                var s = ListBox.SelectedItem as Process;
+                procList.Add(s);
+            }
+
+
+            listwyb.ItemsSource = procList;
+        }
+
+        private void uruchombutt_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Process p in listwyb.Items)
+            {
+                try
+                {
+                    Process.Start(p.ProcessName);
+                }
+                catch { }
+            }
+            listwyb.ItemsSource = null;
+
+        }
+
+    }
 }
