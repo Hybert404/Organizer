@@ -14,47 +14,24 @@ namespace Organizer
 
     public partial class MainWindow : Window
     {
-        private System.Windows.Forms.NotifyIcon m_notifyIcon;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         public MainWindow()
         {
             InitializeComponent();
-            m_notifyIcon = new System.Windows.Forms.NotifyIcon
+            notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 BalloonTipText = "The app has been minimised. Click the tray icon to show.",
                 BalloonTipTitle = "The App",
                 Text = "The App",
-                Icon = new System.Drawing.Icon("TheAppIcon.ico")
+                Icon = Properties.Resources.AppIcon
             };
-            m_notifyIcon.Click += new EventHandler(m_notifyIcon_Click);
+            notifyIcon.Click += new EventHandler(notifyIcon_Click);
+            this.notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(notifyIcon_Click);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (TextBlock1.Text == "Hello" || TextBlock1.Text == "Nie klikać")
-            {
-                TextBlock1.Text = "World";
-                //Process[] localByName = Process.GetProcessesByName("notepad");
-            }
-            else
-            {
-                TextBlock1.Text = "Hello";
-                //ListProcesses();
-
-            }
-        }
-        //private void ListProcesses()
-        //{
-        //    Process[] processCollection = Process.GetProcesses();
-        //    foreach (Process p in processCollection)
-        //    {
-        //        ListBox.Items.Add(p);
-        //    }
-        //}
 
         private void ListProcBttn_Click(object sender, RoutedEventArgs e)
         {
             GetApplications();
-            //GetWindows();
         }
 
         public void GetApplications()
@@ -119,31 +96,31 @@ namespace Organizer
 
         //void OnClose(object sender, CancelEventArgs args)
         //{
-        //    m_notifyIcon.Dispose();
-        //    m_notifyIcon = null;
+        //    notifyIcon.Dispose();
+        //    notifyIcon = null;
         //}
 
-        private WindowState m_storedWindowState = WindowState.Normal;
+        private WindowState storedWindowState = WindowState.Normal;
         void OnStateChanged(object sender, EventArgs args)
         {
             if (WindowState == WindowState.Minimized)
             {
                 Hide();
-                if (m_notifyIcon != null)
-                    m_notifyIcon.ShowBalloonTip(2000);
+                if (notifyIcon != null)
+                    notifyIcon.ShowBalloonTip(2000);
             }
             else
-                m_storedWindowState = WindowState;
+                storedWindowState = WindowState;
         }
         void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
             CheckTrayIcon();
         }
 
-        void m_notifyIcon_Click(object sender, EventArgs e)
+        void notifyIcon_Click(object sender, EventArgs e)
         {
             Show();
-            WindowState = m_storedWindowState;
+            WindowState = storedWindowState;
         }
         void CheckTrayIcon()
         {
@@ -152,8 +129,8 @@ namespace Organizer
 
         void ShowTrayIcon(bool show)
         {
-            if (m_notifyIcon != null)
-                m_notifyIcon.Visible = show;
+            if (notifyIcon != null)
+                notifyIcon.Visible = show;
         }
 
     }
