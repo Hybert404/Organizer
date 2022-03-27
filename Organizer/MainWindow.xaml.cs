@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-
-
 
 namespace Organizer
 {
@@ -18,6 +14,19 @@ namespace Organizer
         public MainWindow()
         {
             InitializeComponent();
+            Main.Content = new MainPage();
+            //DataClasses1DataContext DB = new DataClasses1DataContext();
+
+            //using (DataClasses1DataContext dbContext = new DataClasses1DataContext())
+            //{
+            //    IEnumerable<Profile> profiles = dbContext.ExecuteQuery<Profile>("Select * from Profile");
+            //    foreach (Profile profile in profiles)
+            //    {
+            //        MessageBox.Show(profile.Id_prof + " " + profile.Name);
+            //    }
+            //}
+
+            // Ikona w zasobniku
             notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 BalloonTipText = "The app has been minimised. Click the tray icon to show.",
@@ -28,71 +37,18 @@ namespace Organizer
             this.notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(notifyIcon_Click);
         }
 
-        private void ListProcBttn_Click(object sender, RoutedEventArgs e)
+        //Menu główne, sterowanie stronami
+        private void Bttn_Click_ManageProfiles(object sender, RoutedEventArgs e)
         {
-            GetApplications();
+            Main.Content = new ProfilesManagerPage();
         }
 
-        public void GetApplications()
+        private void Bttn_Click_MainWindow(object sender, RoutedEventArgs e)
         {
-            List<Process> procList = new List<Process>();
-            foreach (Process p in Process.GetProcesses("."))
-            {
-                try
-                {
-                    if (p.MainWindowTitle.Length > 0)
-                    {
-                        procList.Add(p);
-                    }
-                }
-                catch { }
-            }
-            ListBox.ItemsSource = procList;
+            Main.Content = new MainPage();
         }
 
-        public void GetWindows()
-        {
-            foreach (Window window in App.Current.Windows)
-            {
-                ListBox.Items.Add(window.Title);
-            }
-        }
-
-        private void RunBttn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var s = ListBox.SelectedItem as Process;
-                TestBox.Items.Add(s.ProcessName);
-                Process.Start(s.ProcessName);
-            }
-            catch
-            {
-                DebugBox.Items.Add("Nie można uruchomiń procesu");
-            }
-        }
-
-        private void KillBttn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var s = ListBox.SelectedItem as Process;
-                TestBox.Items.Add(s.ProcessName);
-                if (s.ProcessName == "devenv")
-                {
-                    TestBox.Items.Add("Próbujesz zakończyć proces Visual Studio, da się, ale lepiej tego nie robić");
-                }
-                else
-                {
-                    s.Kill();
-                }
-            }
-            catch
-            {
-                DebugBox.Items.Add("Nie można zamknąć procesu");
-            }
-        }
-
+        //Funkcje ikony w zasobniku
         void OnClose(object sender, EventArgs args)
         {
             notifyIcon.Dispose();
@@ -124,6 +80,7 @@ namespace Organizer
             }
         }
 
+        //Funkcje menu kontekstowe
         private void Menu_Close(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Closing app");
@@ -134,37 +91,6 @@ namespace Organizer
         {
             Show();
             WindowState = storedWindowState;
-        }
-
-        private void Przesun_Click(object sender, RoutedEventArgs e)
-        {
-            List<Process> procList = new List<Process>();
-            foreach (Process p in listwyb.Items)
-            {
-                procList.Add(p);
-            }
-
-            {
-                var s = ListBox.SelectedItem as Process;
-                procList.Add(s);
-            }
-
-
-            listwyb.ItemsSource = procList;
-        }
-
-        private void uruchombutt_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (Process p in listwyb.Items)
-            {
-                try
-                {
-                    Process.Start(p.ProcessName);
-                }
-                catch { }
-            }
-            listwyb.ItemsSource = null;
-
         }
 
     }

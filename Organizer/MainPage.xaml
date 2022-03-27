@@ -1,0 +1,52 @@
+﻿<Page x:Class="Organizer.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Organizer"
+      mc:Ignorable="d"
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="MainPage">
+
+    <Grid Width="800" Height="450" Margin="0,20,0,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="484,98,27,73" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="ListProcBttn" Content="Listuj procesy" HorizontalAlignment="Left" Margin="484,382,0,0" VerticalAlignment="Top" Height="38" Width="83" Click="ListProcBttn_Click"/>
+        <Button x:Name="RunBttn" Content="Uruchom&#xA;proces ponownie" HorizontalAlignment="Left" Margin="572,382,0,0" VerticalAlignment="Top" Height="38" Width="103" Click="RunBttn_Click"/>
+        <ListBox x:Name="TestBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,98,533,201"/>
+        <Label Content="Procesy uruchomione ponownie" HorizontalAlignment="Left" Margin="25,66,0,0" VerticalAlignment="Top"/>
+        <Label Content="Procesy działające" HorizontalAlignment="Left" Margin="484,66,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="KillBttn" Content="Zamknij proces" HorizontalAlignment="Left" Margin="680,382,0,0" VerticalAlignment="Top" Height="38" Width="93" Click="KillBttn_Click"/>
+        <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,356,595,30"/>
+        <ListBox x:Name="listwyb" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="284,98,364,217">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Procesy do uruchomienia&#xD;&#xA;" HorizontalAlignment="Left" Margin="284,66,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Button x:Name="Przesun" Content="&lt;" HorizontalAlignment="Left" Height="25" Margin="441,125,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click"/>
+        <Button x:Name="uruchombutt" Content="Uruchom" HorizontalAlignment="Left" Height="24" Margin="325,238,0,0" VerticalAlignment="Top" Width="70" Click="uruchombutt_Click"/>
+
+    </Grid>
+</Page>

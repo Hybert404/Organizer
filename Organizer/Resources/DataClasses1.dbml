@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\database.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Organizer.Properties.Settings" SettingsPropertyName="databaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.App" Member="Apps">
+    <Type Name="App">
+      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="NChar(150)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Association Name="App_Time_app" Member="Time_apps" ThisKey="Id_app" OtherKey="Id_app" Type="Time_app" />
+      <Association Name="App_Add_desc" Member="Add_descs" ThisKey="Id_app" OtherKey="Id_app" Type="Add_desc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Profile" Member="Profiles">
+    <Type Name="Profile">
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Profile_Time_profile" Member="Time_profiles" ThisKey="Id_prof" OtherKey="Id_prof" Type="Time_profile" />
+      <Association Name="Profile_Add_desc" Member="Add_descs" ThisKey="Id_prof" OtherKey="Id_prof" Type="Add_desc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Time_app" Member="Time_apps">
+    <Type Name="Time_app">
+      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Association Name="App_Time_app" Member="App" ThisKey="Id_app" OtherKey="Id_app" Type="App" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Time_profile" Member="Time_profiles">
+    <Type Name="Time_profile">
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Association Name="Profile_Time_profile" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Add_desc" Member="Add_descs">
+    <Type Name="Add_desc">
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="X" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Width" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Height" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="App_Add_desc" Member="App" ThisKey="Id_app" OtherKey="Id_app" Type="App" IsForeignKey="true" />
+      <Association Name="Profile_Add_desc" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

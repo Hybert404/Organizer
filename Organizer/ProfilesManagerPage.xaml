@@ -1,0 +1,20 @@
+﻿<Page x:Class="Organizer.ProfilesManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Organizer"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="ProfilesManagerPage">
+
+    <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" Width="800" Height="450" Margin="0,20,0,0">
+        <Label Content="Here you can manage your profiles" HorizontalAlignment="Left" Margin="270,85,0,0" VerticalAlignment="Top" Height="42" Width="225"/>
+        <Grid Height="200" Margin="29,132,400,118" Width="400">
+            <TextBlock TextWrapping="Wrap" Height="31" Width="346" FontSize="20" Margin="10,28,34,92"><Run Text="Wprowadź nazwę nowego "/><Run Language="pl-pl" Text="p"/><Run Text="rofilu"/></TextBlock>
+            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Text="TextBox" Width="170" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,64,0,54"/>
+            <Button Content="Dodaj nowy profil" HorizontalAlignment="Left" Margin="200,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
+        </Grid>
+
+    </Grid>
+</Page>
