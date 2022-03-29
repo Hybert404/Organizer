@@ -18,10 +18,17 @@ namespace Organizer
 
         private void Bttc_Click_Add_profile(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Czy na pewno chcesz dodać nowy profil?", "Potwierdzenie", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (NewProfileTextBox.Text.Length > 0)
             {
-                Save_profile(NewProfileTextBox.Text);
-                MessageBox.Show("Dodano nowy profil o nazwie " + NewProfileTextBox.Text);
+                if (MessageBox.Show("Do you want to add a new profile?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    Save_profile(NewProfileTextBox.Text);
+                    MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a profile name");
             }
         }
 
@@ -35,5 +42,6 @@ namespace Organizer
                 DB.SubmitChanges();
             }
         }
+
     }
 }
