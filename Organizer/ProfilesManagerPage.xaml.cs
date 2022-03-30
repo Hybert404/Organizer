@@ -22,7 +22,18 @@ namespace Organizer
         {
             GetApplications();
         }
+        void Program_desc_create(Process p)
+        {
+            try
+            {
+                var s = p.MainModule.FileName;
+                ProcessStartInfo startInfo = new ProcessStartInfo(s);
+                startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                Process.Start(startInfo);
+            }
+            catch { }
 
+        }
         public void GetApplications()
         {
             List<Process> procList = new List<Process>();
