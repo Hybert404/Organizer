@@ -9,6 +9,15 @@
       <Association Name="App_Time_app" Member="Time_apps" ThisKey="Id_app" OtherKey="Id_app" Type="Time_app" />
     </Type>
   </Table>
+  <Table Name="dbo.Time_profile" Member="Time_profiles">
+    <Type Name="Time_profile">
+      <Column Name="Id_time_profile" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Association Name="Profile_Time_profile" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.App_desc" Member="App_descs">
     <Type Name="App_desc">
       <Column Name="Id_app_desc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -26,17 +35,8 @@
     <Type Name="Profile">
       <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Profile_App_desc" Member="App_descs" ThisKey="Id_prof" OtherKey="Id_prof" Type="App_desc" />
       <Association Name="Profile_Time_profile" Member="Time_profiles" ThisKey="Id_prof" OtherKey="Id_prof" Type="Time_profile" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Time_profile" Member="Time_profiles">
-    <Type Name="Time_profile">
-      <Column Name="Id_time_profile" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Association Name="Profile_Time_profile" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
+      <Association Name="Profile_App_desc" Member="App_descs" ThisKey="Id_prof" OtherKey="Id_prof" Type="App_desc" />
     </Type>
   </Table>
   <Table Name="dbo.Time_app" Member="Time_apps">
