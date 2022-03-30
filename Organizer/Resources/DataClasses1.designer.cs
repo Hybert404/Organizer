@@ -33,15 +33,15 @@ namespace Organizer.Resources
     partial void InsertApp(App instance);
     partial void UpdateApp(App instance);
     partial void DeleteApp(App instance);
+    partial void InsertTime_profile(Time_profile instance);
+    partial void UpdateTime_profile(Time_profile instance);
+    partial void DeleteTime_profile(Time_profile instance);
     partial void InsertApp_desc(App_desc instance);
     partial void UpdateApp_desc(App_desc instance);
     partial void DeleteApp_desc(App_desc instance);
     partial void InsertProfile(Profile instance);
     partial void UpdateProfile(Profile instance);
     partial void DeleteProfile(Profile instance);
-    partial void InsertTime_profile(Time_profile instance);
-    partial void UpdateTime_profile(Time_profile instance);
-    partial void DeleteTime_profile(Time_profile instance);
     partial void InsertTime_app(Time_app instance);
     partial void UpdateTime_app(Time_app instance);
     partial void DeleteTime_app(Time_app instance);
@@ -85,6 +85,14 @@ namespace Organizer.Resources
 			}
 		}
 		
+		public System.Data.Linq.Table<Time_profile> Time_profiles
+		{
+			get
+			{
+				return this.GetTable<Time_profile>();
+			}
+		}
+		
 		public System.Data.Linq.Table<App_desc> App_descs
 		{
 			get
@@ -98,14 +106,6 @@ namespace Organizer.Resources
 			get
 			{
 				return this.GetTable<Profile>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Time_profile> Time_profiles
-		{
-			get
-			{
-				return this.GetTable<Time_profile>();
 			}
 		}
 		
@@ -281,6 +281,181 @@ namespace Organizer.Resources
 		{
 			this.SendPropertyChanging();
 			entity.App = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Time_profile")]
+	public partial class Time_profile : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_time_profile;
+		
+		private int _Id_prof;
+		
+		private System.Nullable<System.DateTime> _Time_start;
+		
+		private System.Nullable<System.DateTime> _Time_stop;
+		
+		private EntityRef<Profile> _Profile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_time_profileChanging(int value);
+    partial void OnId_time_profileChanged();
+    partial void OnId_profChanging(int value);
+    partial void OnId_profChanged();
+    partial void OnTime_startChanging(System.Nullable<System.DateTime> value);
+    partial void OnTime_startChanged();
+    partial void OnTime_stopChanging(System.Nullable<System.DateTime> value);
+    partial void OnTime_stopChanged();
+    #endregion
+		
+		public Time_profile()
+		{
+			this._Profile = default(EntityRef<Profile>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_time_profile", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_time_profile
+		{
+			get
+			{
+				return this._Id_time_profile;
+			}
+			set
+			{
+				if ((this._Id_time_profile != value))
+				{
+					this.OnId_time_profileChanging(value);
+					this.SendPropertyChanging();
+					this._Id_time_profile = value;
+					this.SendPropertyChanged("Id_time_profile");
+					this.OnId_time_profileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", DbType="Int NOT NULL")]
+		public int Id_prof
+		{
+			get
+			{
+				return this._Id_prof;
+			}
+			set
+			{
+				if ((this._Id_prof != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_profChanging(value);
+					this.SendPropertyChanging();
+					this._Id_prof = value;
+					this.SendPropertyChanged("Id_prof");
+					this.OnId_profChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_start", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> Time_start
+		{
+			get
+			{
+				return this._Time_start;
+			}
+			set
+			{
+				if ((this._Time_start != value))
+				{
+					this.OnTime_startChanging(value);
+					this.SendPropertyChanging();
+					this._Time_start = value;
+					this.SendPropertyChanged("Time_start");
+					this.OnTime_startChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_stop", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> Time_stop
+		{
+			get
+			{
+				return this._Time_stop;
+			}
+			set
+			{
+				if ((this._Time_stop != value))
+				{
+					this.OnTime_stopChanging(value);
+					this.SendPropertyChanging();
+					this._Time_stop = value;
+					this.SendPropertyChanged("Time_stop");
+					this.OnTime_stopChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Time_profile", Storage="_Profile", ThisKey="Id_prof", OtherKey="Id_prof", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.Time_profiles.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.Time_profiles.Add(this);
+						this._Id_prof = value.Id_prof;
+					}
+					else
+					{
+						this._Id_prof = default(int);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -582,9 +757,9 @@ namespace Organizer.Resources
 		
 		private string _Name;
 		
-		private EntitySet<App_desc> _App_descs;
-		
 		private EntitySet<Time_profile> _Time_profiles;
+		
+		private EntitySet<App_desc> _App_descs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -598,8 +773,8 @@ namespace Organizer.Resources
 		
 		public Profile()
 		{
-			this._App_descs = new EntitySet<App_desc>(new Action<App_desc>(this.attach_App_descs), new Action<App_desc>(this.detach_App_descs));
 			this._Time_profiles = new EntitySet<Time_profile>(new Action<Time_profile>(this.attach_Time_profiles), new Action<Time_profile>(this.detach_Time_profiles));
+			this._App_descs = new EntitySet<App_desc>(new Action<App_desc>(this.attach_App_descs), new Action<App_desc>(this.detach_App_descs));
 			OnCreated();
 		}
 		
@@ -643,19 +818,6 @@ namespace Organizer.Resources
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_App_desc", Storage="_App_descs", ThisKey="Id_prof", OtherKey="Id_prof")]
-		public EntitySet<App_desc> App_descs
-		{
-			get
-			{
-				return this._App_descs;
-			}
-			set
-			{
-				this._App_descs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Time_profile", Storage="_Time_profiles", ThisKey="Id_prof", OtherKey="Id_prof")]
 		public EntitySet<Time_profile> Time_profiles
 		{
@@ -669,6 +831,19 @@ namespace Organizer.Resources
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_App_desc", Storage="_App_descs", ThisKey="Id_prof", OtherKey="Id_prof")]
+		public EntitySet<App_desc> App_descs
+		{
+			get
+			{
+				return this._App_descs;
+			}
+			set
+			{
+				this._App_descs.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -687,18 +862,6 @@ namespace Organizer.Resources
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_App_descs(App_desc entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = this;
-		}
-		
-		private void detach_App_descs(App_desc entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = null;
 		}
 		
 		private void attach_Time_profiles(Time_profile entity)
@@ -712,180 +875,17 @@ namespace Organizer.Resources
 			this.SendPropertyChanging();
 			entity.Profile = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Time_profile")]
-	public partial class Time_profile : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_time_profile;
-		
-		private int _Id_prof;
-		
-		private System.Nullable<System.DateTime> _Time_start;
-		
-		private System.Nullable<System.DateTime> _Time_stop;
-		
-		private EntityRef<Profile> _Profile;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_time_profileChanging(int value);
-    partial void OnId_time_profileChanged();
-    partial void OnId_profChanging(int value);
-    partial void OnId_profChanged();
-    partial void OnTime_startChanging(System.Nullable<System.DateTime> value);
-    partial void OnTime_startChanged();
-    partial void OnTime_stopChanging(System.Nullable<System.DateTime> value);
-    partial void OnTime_stopChanged();
-    #endregion
-		
-		public Time_profile()
+		private void attach_App_descs(App_desc entity)
 		{
-			this._Profile = default(EntityRef<Profile>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Profile = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_time_profile", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_time_profile
+		private void detach_App_descs(App_desc entity)
 		{
-			get
-			{
-				return this._Id_time_profile;
-			}
-			set
-			{
-				if ((this._Id_time_profile != value))
-				{
-					this.OnId_time_profileChanging(value);
-					this.SendPropertyChanging();
-					this._Id_time_profile = value;
-					this.SendPropertyChanged("Id_time_profile");
-					this.OnId_time_profileChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", DbType="Int NOT NULL")]
-		public int Id_prof
-		{
-			get
-			{
-				return this._Id_prof;
-			}
-			set
-			{
-				if ((this._Id_prof != value))
-				{
-					if (this._Profile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_profChanging(value);
-					this.SendPropertyChanging();
-					this._Id_prof = value;
-					this.SendPropertyChanged("Id_prof");
-					this.OnId_profChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_start", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> Time_start
-		{
-			get
-			{
-				return this._Time_start;
-			}
-			set
-			{
-				if ((this._Time_start != value))
-				{
-					this.OnTime_startChanging(value);
-					this.SendPropertyChanging();
-					this._Time_start = value;
-					this.SendPropertyChanged("Time_start");
-					this.OnTime_startChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_stop", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> Time_stop
-		{
-			get
-			{
-				return this._Time_stop;
-			}
-			set
-			{
-				if ((this._Time_stop != value))
-				{
-					this.OnTime_stopChanging(value);
-					this.SendPropertyChanging();
-					this._Time_stop = value;
-					this.SendPropertyChanged("Time_stop");
-					this.OnTime_stopChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Time_profile", Storage="_Profile", ThisKey="Id_prof", OtherKey="Id_prof", IsForeignKey=true)]
-		public Profile Profile
-		{
-			get
-			{
-				return this._Profile.Entity;
-			}
-			set
-			{
-				Profile previousValue = this._Profile.Entity;
-				if (((previousValue != value) 
-							|| (this._Profile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Profile.Entity = null;
-						previousValue.Time_profiles.Remove(this);
-					}
-					this._Profile.Entity = value;
-					if ((value != null))
-					{
-						value.Time_profiles.Add(this);
-						this._Id_prof = value.Id_prof;
-					}
-					else
-					{
-						this._Id_prof = default(int);
-					}
-					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Profile = null;
 		}
 	}
 	
