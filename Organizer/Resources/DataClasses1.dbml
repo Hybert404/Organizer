@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Resources\database.mdf;Integrated Security=True" SettingsObjectName="Organizer.Properties.Settings" SettingsPropertyName="databaseConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.App" Member="Apps">
-    <Type Name="App">
+  <Table Name="dbo.App" Member="Programs">
+    <Type Name="Program">
       <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Path" Type="System.String" DbType="NChar(150)" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
@@ -27,7 +27,7 @@
       <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Width" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Height" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="App_App_desc" Member="App" ThisKey="Id_app" OtherKey="Id_app" Type="App" IsForeignKey="true" />
+      <Association Name="App_App_desc" Member="Program" Storage="_App" ThisKey="Id_app" OtherKey="Id_app" Type="Program" IsForeignKey="true" />
       <Association Name="Profile_App_desc" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
     </Type>
   </Table>
@@ -45,7 +45,7 @@
       <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Association Name="App_Time_app" Member="App" ThisKey="Id_app" OtherKey="Id_app" Type="App" IsForeignKey="true" />
+      <Association Name="App_Time_app" Member="Program" Storage="_App" ThisKey="Id_app" OtherKey="Id_app" Type="Program" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

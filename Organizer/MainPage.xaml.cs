@@ -14,99 +14,66 @@ namespace Organizer
         public MainPage()
         {
             InitializeComponent();
+            listProfilesMain();
         }
 
-        //Listowanie aplikacji
-        private void ListProcBttn_Click(object sender, RoutedEventArgs e)
-        {
-            GetApplications();
-        }
+        ////Uruchamianie procesu
+        //private void RunBttn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var s = ListBox.SelectedItem as Process;
+        //        TestBox.Items.Add(s.ProcessName);
+        //        Process.Start(s.ProcessName);
+        //    }
+        //    catch
+        //    {
+        //        DebugBox.Items.Add("Nie można uruchomiń procesu");
+        //    }
+        //}
 
-        public void GetApplications()
+        ////Zamykanie procesu
+        //private void KillBttn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var s = ListBox.SelectedItem as Process;
+        //        TestBox.Items.Add(s.ProcessName);
+        //        if (s.ProcessName == "devenv")
+        //        {
+        //            TestBox.Items.Add("Próbujesz zakończyć proces Visual Studio, da się, ale lepiej tego nie robić");
+        //        }
+        //        else
+        //        {
+        //            s.Kill();
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        DebugBox.Items.Add("Nie można zamknąć procesu");
+        //    }
+        //}
+        void listProfilesMain()
         {
-            List<Process> procList = new List<Process>();
-            foreach (Process p in Process.GetProcesses("."))
+            using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
-                try
+                List<Profile> profList = new List<Profile>();
+                foreach (Profile prof in DB.Profiles)
                 {
-                    if (p.MainWindowTitle.Length > 0)
+                    try
                     {
-                        procList.Add(p);
+                        profList.Add(prof);
                     }
+                    catch { }
                 }
-                catch { }
+                profileListMain.ItemsSource = profList;
             }
-            ListBox.ItemsSource = procList;
         }
 
-        //Uruchamianie procesu
-        private void RunBttn_Click(object sender, RoutedEventArgs e)
+        private void BttnActivateProfile_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var s = ListBox.SelectedItem as Process;
-                TestBox.Items.Add(s.ProcessName);
-                Process.Start(s.ProcessName);
-            }
-            catch
-            {
-                DebugBox.Items.Add("Nie można uruchomiń procesu");
-            }
+            var selProf = profileListMain.SelectedItem as Profile;
+            MessageBox.Show("This button will activate selected profile: " + selProf.Name);
         }
-
-        //Zamykanie procesu
-        private void KillBttn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var s = ListBox.SelectedItem as Process;
-                TestBox.Items.Add(s.ProcessName);
-                if (s.ProcessName == "devenv")
-                {
-                    TestBox.Items.Add("Próbujesz zakończyć proces Visual Studio, da się, ale lepiej tego nie robić");
-                }
-                else
-                {
-                    s.Kill();
-                }
-            }
-            catch
-            {
-                DebugBox.Items.Add("Nie można zamknąć procesu");
-            }
-        }
-
-        //Uruchamianie grupy aplikacji
-        private void Przesun_Click(object sender, RoutedEventArgs e)
-        {
-            List<Process> procList = new List<Process>();
-            foreach (Process p in listwyb.Items)
-            {
-                procList.Add(p);
-            }
-
-            {
-                var s = ListBox.SelectedItem as Process;
-                procList.Add(s);
-            }
-
-
-            listwyb.ItemsSource = procList;
-        }
-
-        private void uruchombutt_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (Process p in listwyb.Items)
-            {
-                try
-                {
-                    Process.Start(p.ProcessName);
-                }
-                catch { }
-            }
-            listwyb.ItemsSource = null;
-
-        }
-
     }
 }

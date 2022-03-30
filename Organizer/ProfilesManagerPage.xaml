@@ -9,11 +9,59 @@
       Title="ProfilesManagerPage">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" Width="800" Height="450" Margin="0,20,0,0">
-        <Label Content="Here you can manage your profiles" HorizontalAlignment="Left" Margin="270,85,0,0" VerticalAlignment="Top" Height="42" Width="225"/>
-        <Grid Height="200" Margin="29,132,400,118" Width="400">
+        <Label Content="Here you can manage your profiles" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Height="42" Width="225"/>
+        <Grid Height="200" Margin="10,288,390,-38" Width="400">
             <TextBlock TextWrapping="Wrap" Height="31" Width="346" FontSize="20" Margin="10,52,44,116"><Run Language="pl-pl" Text="Enter name of a new profile"/></TextBlock>
             <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="170" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,64,0,54"/>
             <Button Content="Add new profile" HorizontalAlignment="Left" Margin="200,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
         </Grid>
+        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="556,86,10,86" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="ListProcBttn" Content="List procesess" HorizontalAlignment="Left" Margin="614,369,0,0" VerticalAlignment="Top" Height="38" Width="118" Click="ListProcBttn_Click"/>
+        <Label Content="Running processes" HorizontalAlignment="Left" Margin="556,55,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="listwyb" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="287,86,292,229">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="ProcessName"/>
+                                <Binding Path="MainWindowTitle"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Group of processes" HorizontalAlignment="Left" Margin="339,55,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Button x:Name="Przesun" Content="&lt;" HorizontalAlignment="Left" Height="24" Margin="513,125,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click"/>
+        <Button x:Name="BttnSaveToProf" Content="Save to profile" HorizontalAlignment="Left" Height="27" Margin="344,226,0,0" VerticalAlignment="Top" Width="106" Click="BttnSaveToProf_Click"/>
+        <ListBox x:Name="profileList" HorizontalAlignment="Left" Height="236" Margin="10,86,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Button x:Name="BttnlistPrograms" Content="List programs" HorizontalAlignment="Left" Margin="354,269,0,0" VerticalAlignment="Top" Height="29" Width="86" Click="BttnlistPrograms_Click"/>
     </Grid>
 </Page>

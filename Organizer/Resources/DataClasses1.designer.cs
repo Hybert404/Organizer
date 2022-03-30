@@ -30,9 +30,9 @@ namespace Organizer.Resources
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertApp(App instance);
-    partial void UpdateApp(App instance);
-    partial void DeleteApp(App instance);
+    partial void InsertProgram(Program instance);
+    partial void UpdateProgram(Program instance);
+    partial void DeleteProgram(Program instance);
     partial void InsertTime_profile(Time_profile instance);
     partial void UpdateTime_profile(Time_profile instance);
     partial void DeleteTime_profile(Time_profile instance);
@@ -77,11 +77,11 @@ namespace Organizer.Resources
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<App> Apps
+		public System.Data.Linq.Table<Program> Programs
 		{
 			get
 			{
-				return this.GetTable<App>();
+				return this.GetTable<Program>();
 			}
 		}
 		
@@ -119,7 +119,7 @@ namespace Organizer.Resources
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.App")]
-	public partial class App : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Program : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -146,7 +146,7 @@ namespace Organizer.Resources
     partial void OnNameChanged();
     #endregion
 		
-		public App()
+		public Program()
 		{
 			this._App_descs = new EntitySet<App_desc>(new Action<App_desc>(this.attach_App_descs), new Action<App_desc>(this.detach_App_descs));
 			this._Time_apps = new EntitySet<Time_app>(new Action<Time_app>(this.attach_Time_apps), new Action<Time_app>(this.detach_Time_apps));
@@ -262,25 +262,25 @@ namespace Organizer.Resources
 		private void attach_App_descs(App_desc entity)
 		{
 			this.SendPropertyChanging();
-			entity.App = this;
+			entity.Program = this;
 		}
 		
 		private void detach_App_descs(App_desc entity)
 		{
 			this.SendPropertyChanging();
-			entity.App = null;
+			entity.Program = null;
 		}
 		
 		private void attach_Time_apps(Time_app entity)
 		{
 			this.SendPropertyChanging();
-			entity.App = this;
+			entity.Program = this;
 		}
 		
 		private void detach_Time_apps(Time_app entity)
 		{
 			this.SendPropertyChanging();
-			entity.App = null;
+			entity.Program = null;
 		}
 	}
 	
@@ -479,7 +479,7 @@ namespace Organizer.Resources
 		
 		private System.Nullable<int> _Height;
 		
-		private EntityRef<App> _App;
+		private EntityRef<Program> _App;
 		
 		private EntityRef<Profile> _Profile;
 		
@@ -505,7 +505,7 @@ namespace Organizer.Resources
 		
 		public App_desc()
 		{
-			this._App = default(EntityRef<App>);
+			this._App = default(EntityRef<Program>);
 			this._Profile = default(EntityRef<Profile>);
 			OnCreated();
 		}
@@ -659,7 +659,7 @@ namespace Organizer.Resources
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_App_desc", Storage="_App", ThisKey="Id_app", OtherKey="Id_app", IsForeignKey=true)]
-		public App App
+		public Program Program
 		{
 			get
 			{
@@ -667,7 +667,7 @@ namespace Organizer.Resources
 			}
 			set
 			{
-				App previousValue = this._App.Entity;
+				Program previousValue = this._App.Entity;
 				if (((previousValue != value) 
 							|| (this._App.HasLoadedOrAssignedValue == false)))
 				{
@@ -687,7 +687,7 @@ namespace Organizer.Resources
 					{
 						this._Id_app = default(int);
 					}
-					this.SendPropertyChanged("App");
+					this.SendPropertyChanged("Program");
 				}
 			}
 		}
@@ -903,7 +903,7 @@ namespace Organizer.Resources
 		
 		private System.Nullable<System.DateTime> _Time_stop;
 		
-		private EntityRef<App> _App;
+		private EntityRef<Program> _App;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -921,7 +921,7 @@ namespace Organizer.Resources
 		
 		public Time_app()
 		{
-			this._App = default(EntityRef<App>);
+			this._App = default(EntityRef<Program>);
 			OnCreated();
 		}
 		
@@ -1010,7 +1010,7 @@ namespace Organizer.Resources
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_Time_app", Storage="_App", ThisKey="Id_app", OtherKey="Id_app", IsForeignKey=true)]
-		public App App
+		public Program Program
 		{
 			get
 			{
@@ -1018,7 +1018,7 @@ namespace Organizer.Resources
 			}
 			set
 			{
-				App previousValue = this._App.Entity;
+				Program previousValue = this._App.Entity;
 				if (((previousValue != value) 
 							|| (this._App.HasLoadedOrAssignedValue == false)))
 				{
@@ -1038,7 +1038,7 @@ namespace Organizer.Resources
 					{
 						this._Id_app = default(int);
 					}
-					this.SendPropertyChanged("App");
+					this.SendPropertyChanged("Program");
 				}
 			}
 		}
