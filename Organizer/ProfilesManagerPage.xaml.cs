@@ -73,7 +73,7 @@ namespace Organizer
             {
                 Profile p = new Profile();
                 p.Name = nazwa;
-                DB.Profiles.InsertOnSubmit(p);
+                DB.Profile.InsertOnSubmit(p);
                 DB.SubmitChanges();
             }
             listProfiles();
@@ -114,7 +114,7 @@ namespace Organizer
                         Path = p.MainModule.FileName,
                         Name = p.ProcessName
                     };
-                    DB.Programs.InsertOnSubmit(pr);
+                    DB.Program.InsertOnSubmit(pr);
                     DB.SubmitChanges();
                 }
             }
@@ -126,7 +126,7 @@ namespace Organizer
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
                 List<Profile> profList = new List<Profile>();
-                foreach (Profile prof in DB.Profiles)
+                foreach (Profile prof in DB.Profile)
                 {
                     try
                     {
@@ -142,7 +142,7 @@ namespace Organizer
         {
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
-                foreach (Program pr in DB.Programs)
+                foreach (Program pr in DB.Program)
                 {
                     MessageBox.Show(pr.Name);
                 }

@@ -58,7 +58,7 @@ namespace Organizer
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
                 List<Profile> profList = new List<Profile>();
-                foreach (Profile prof in DB.Profiles)
+                foreach (Profile prof in DB.Profile)
                 {
                     try
                     {

@@ -30,21 +30,21 @@ namespace Organizer.Resources
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertProgram(Program instance);
-    partial void UpdateProgram(Program instance);
-    partial void DeleteProgram(Program instance);
-    partial void InsertTime_profile(Time_profile instance);
-    partial void UpdateTime_profile(Time_profile instance);
-    partial void DeleteTime_profile(Time_profile instance);
-    partial void InsertApp_desc(App_desc instance);
-    partial void UpdateApp_desc(App_desc instance);
-    partial void DeleteApp_desc(App_desc instance);
     partial void InsertProfile(Profile instance);
     partial void UpdateProfile(Profile instance);
     partial void DeleteProfile(Profile instance);
-    partial void InsertTime_app(Time_app instance);
-    partial void UpdateTime_app(Time_app instance);
-    partial void DeleteTime_app(Time_app instance);
+    partial void InsertTime_program(Time_program instance);
+    partial void UpdateTime_program(Time_program instance);
+    partial void DeleteTime_program(Time_program instance);
+    partial void InsertProgram(Program instance);
+    partial void UpdateProgram(Program instance);
+    partial void DeleteProgram(Program instance);
+    partial void InsertProgram_desc(Program_desc instance);
+    partial void UpdateProgram_desc(Program_desc instance);
+    partial void DeleteProgram_desc(Program_desc instance);
+    partial void InsertTime_profile(Time_profile instance);
+    partial void UpdateTime_profile(Time_profile instance);
+    partial void DeleteTime_profile(Time_profile instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -77,31 +77,7 @@ namespace Organizer.Resources
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Program> Programs
-		{
-			get
-			{
-				return this.GetTable<Program>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Time_profile> Time_profiles
-		{
-			get
-			{
-				return this.GetTable<Time_profile>();
-			}
-		}
-		
-		public System.Data.Linq.Table<App_desc> App_descs
-		{
-			get
-			{
-				return this.GetTable<App_desc>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Profile> Profiles
+		public System.Data.Linq.Table<Profile> Profile
 		{
 			get
 			{
@@ -109,37 +85,378 @@ namespace Organizer.Resources
 			}
 		}
 		
-		public System.Data.Linq.Table<Time_app> Time_apps
+		public System.Data.Linq.Table<Time_program> Time_program
 		{
 			get
 			{
-				return this.GetTable<Time_app>();
+				return this.GetTable<Time_program>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Program> Program
+		{
+			get
+			{
+				return this.GetTable<Program>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Program_desc> Program_desc
+		{
+			get
+			{
+				return this.GetTable<Program_desc>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Time_profile> Time_profile
+		{
+			get
+			{
+				return this.GetTable<Time_profile>();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.App")]
-	public partial class Program : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Profile")]
+	public partial class Profile : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _Id_app;
-		
-		private string _Path;
+		private int _Id_prof;
 		
 		private string _Name;
 		
-		private EntitySet<App_desc> _App_descs;
+		private EntitySet<Program_desc> _Program_desc;
 		
-		private EntitySet<Time_app> _Time_apps;
+		private EntitySet<Time_profile> _Time_profile;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnId_appChanging(int value);
-    partial void OnId_appChanged();
+    partial void OnId_profChanging(int value);
+    partial void OnId_profChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Profile()
+		{
+			this._Program_desc = new EntitySet<Program_desc>(new Action<Program_desc>(this.attach_Program_desc), new Action<Program_desc>(this.detach_Program_desc));
+			this._Time_profile = new EntitySet<Time_profile>(new Action<Time_profile>(this.attach_Time_profile), new Action<Time_profile>(this.detach_Time_profile));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_prof
+		{
+			get
+			{
+				return this._Id_prof;
+			}
+			set
+			{
+				if ((this._Id_prof != value))
+				{
+					this.OnId_profChanging(value);
+					this.SendPropertyChanging();
+					this._Id_prof = value;
+					this.SendPropertyChanged("Id_prof");
+					this.OnId_profChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Program_desc", Storage="_Program_desc", ThisKey="Id_prof", OtherKey="Id_prof")]
+		public EntitySet<Program_desc> Program_desc
+		{
+			get
+			{
+				return this._Program_desc;
+			}
+			set
+			{
+				this._Program_desc.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Time_profile", Storage="_Time_profile", ThisKey="Id_prof", OtherKey="Id_prof")]
+		public EntitySet<Time_profile> Time_profile
+		{
+			get
+			{
+				return this._Time_profile;
+			}
+			set
+			{
+				this._Time_profile.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Program_desc(Program_desc entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = this;
+		}
+		
+		private void detach_Program_desc(Program_desc entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = null;
+		}
+		
+		private void attach_Time_profile(Time_profile entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = this;
+		}
+		
+		private void detach_Time_profile(Time_profile entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Time_program")]
+	public partial class Time_program : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_time_app;
+		
+		private int _Id_prog;
+		
+		private System.Nullable<System.DateTime> _Time_start;
+		
+		private System.Nullable<System.DateTime> _Time_stop;
+		
+		private EntityRef<Program> _Program;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_time_appChanging(int value);
+    partial void OnId_time_appChanged();
+    partial void OnId_progChanging(int value);
+    partial void OnId_progChanged();
+    partial void OnTime_startChanging(System.Nullable<System.DateTime> value);
+    partial void OnTime_startChanged();
+    partial void OnTime_stopChanging(System.Nullable<System.DateTime> value);
+    partial void OnTime_stopChanged();
+    #endregion
+		
+		public Time_program()
+		{
+			this._Program = default(EntityRef<Program>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_time_app", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_time_app
+		{
+			get
+			{
+				return this._Id_time_app;
+			}
+			set
+			{
+				if ((this._Id_time_app != value))
+				{
+					this.OnId_time_appChanging(value);
+					this.SendPropertyChanging();
+					this._Id_time_app = value;
+					this.SendPropertyChanged("Id_time_app");
+					this.OnId_time_appChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prog", DbType="Int NOT NULL")]
+		public int Id_prog
+		{
+			get
+			{
+				return this._Id_prog;
+			}
+			set
+			{
+				if ((this._Id_prog != value))
+				{
+					if (this._Program.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_progChanging(value);
+					this.SendPropertyChanging();
+					this._Id_prog = value;
+					this.SendPropertyChanged("Id_prog");
+					this.OnId_progChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_start", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> Time_start
+		{
+			get
+			{
+				return this._Time_start;
+			}
+			set
+			{
+				if ((this._Time_start != value))
+				{
+					this.OnTime_startChanging(value);
+					this.SendPropertyChanging();
+					this._Time_start = value;
+					this.SendPropertyChanged("Time_start");
+					this.OnTime_startChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_stop", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> Time_stop
+		{
+			get
+			{
+				return this._Time_stop;
+			}
+			set
+			{
+				if ((this._Time_stop != value))
+				{
+					this.OnTime_stopChanging(value);
+					this.SendPropertyChanging();
+					this._Time_stop = value;
+					this.SendPropertyChanged("Time_stop");
+					this.OnTime_stopChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Program_Time_program", Storage="_Program", ThisKey="Id_prog", OtherKey="Id_prog", IsForeignKey=true)]
+		public Program Program
+		{
+			get
+			{
+				return this._Program.Entity;
+			}
+			set
+			{
+				Program previousValue = this._Program.Entity;
+				if (((previousValue != value) 
+							|| (this._Program.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Program.Entity = null;
+						previousValue.Time_program.Remove(this);
+					}
+					this._Program.Entity = value;
+					if ((value != null))
+					{
+						value.Time_program.Add(this);
+						this._Id_prog = value.Id_prog;
+					}
+					else
+					{
+						this._Id_prog = default(int);
+					}
+					this.SendPropertyChanged("Program");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Program")]
+	public partial class Program : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_prog;
+		
+		private string _Path;
+		
+		private string _Name;
+		
+		private EntitySet<Time_program> _Time_program;
+		
+		private EntitySet<Program_desc> _Program_desc;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_progChanging(int value);
+    partial void OnId_progChanged();
     partial void OnPathChanging(string value);
     partial void OnPathChanged();
     partial void OnNameChanging(string value);
@@ -148,27 +465,27 @@ namespace Organizer.Resources
 		
 		public Program()
 		{
-			this._App_descs = new EntitySet<App_desc>(new Action<App_desc>(this.attach_App_descs), new Action<App_desc>(this.detach_App_descs));
-			this._Time_apps = new EntitySet<Time_app>(new Action<Time_app>(this.attach_Time_apps), new Action<Time_app>(this.detach_Time_apps));
+			this._Time_program = new EntitySet<Time_program>(new Action<Time_program>(this.attach_Time_program), new Action<Time_program>(this.detach_Time_program));
+			this._Program_desc = new EntitySet<Program_desc>(new Action<Program_desc>(this.attach_Program_desc), new Action<Program_desc>(this.detach_Program_desc));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_app", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_app
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prog", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_prog
 		{
 			get
 			{
-				return this._Id_app;
+				return this._Id_prog;
 			}
 			set
 			{
-				if ((this._Id_app != value))
+				if ((this._Id_prog != value))
 				{
-					this.OnId_appChanging(value);
+					this.OnId_progChanging(value);
 					this.SendPropertyChanging();
-					this._Id_app = value;
-					this.SendPropertyChanged("Id_app");
-					this.OnId_appChanged();
+					this._Id_prog = value;
+					this.SendPropertyChanged("Id_prog");
+					this.OnId_progChanged();
 				}
 			}
 		}
@@ -213,29 +530,29 @@ namespace Organizer.Resources
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_App_desc", Storage="_App_descs", ThisKey="Id_app", OtherKey="Id_app")]
-		public EntitySet<App_desc> App_descs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Program_Time_program", Storage="_Time_program", ThisKey="Id_prog", OtherKey="Id_prog")]
+		public EntitySet<Time_program> Time_program
 		{
 			get
 			{
-				return this._App_descs;
+				return this._Time_program;
 			}
 			set
 			{
-				this._App_descs.Assign(value);
+				this._Time_program.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_Time_app", Storage="_Time_apps", ThisKey="Id_app", OtherKey="Id_app")]
-		public EntitySet<Time_app> Time_apps
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Program_Program_desc", Storage="_Program_desc", ThisKey="Id_prog", OtherKey="Id_prog")]
+		public EntitySet<Program_desc> Program_desc
 		{
 			get
 			{
-				return this._Time_apps;
+				return this._Program_desc;
 			}
 			set
 			{
-				this._Time_apps.Assign(value);
+				this._Program_desc.Assign(value);
 			}
 		}
 		
@@ -259,28 +576,340 @@ namespace Organizer.Resources
 			}
 		}
 		
-		private void attach_App_descs(App_desc entity)
+		private void attach_Time_program(Time_program entity)
 		{
 			this.SendPropertyChanging();
 			entity.Program = this;
 		}
 		
-		private void detach_App_descs(App_desc entity)
+		private void detach_Time_program(Time_program entity)
 		{
 			this.SendPropertyChanging();
 			entity.Program = null;
 		}
 		
-		private void attach_Time_apps(Time_app entity)
+		private void attach_Program_desc(Program_desc entity)
 		{
 			this.SendPropertyChanging();
 			entity.Program = this;
 		}
 		
-		private void detach_Time_apps(Time_app entity)
+		private void detach_Program_desc(Program_desc entity)
 		{
 			this.SendPropertyChanging();
 			entity.Program = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Program_desc")]
+	public partial class Program_desc : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_program_desc;
+		
+		private int _Id_prof;
+		
+		private int _Id_prog;
+		
+		private System.Nullable<int> _X;
+		
+		private System.Nullable<int> _Y;
+		
+		private System.Nullable<int> _Width;
+		
+		private System.Nullable<int> _Height;
+		
+		private string _Status;
+		
+		private EntityRef<Profile> _Profile;
+		
+		private EntityRef<Program> _Program;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_program_descChanging(int value);
+    partial void OnId_program_descChanged();
+    partial void OnId_profChanging(int value);
+    partial void OnId_profChanged();
+    partial void OnId_progChanging(int value);
+    partial void OnId_progChanged();
+    partial void OnXChanging(System.Nullable<int> value);
+    partial void OnXChanged();
+    partial void OnYChanging(System.Nullable<int> value);
+    partial void OnYChanged();
+    partial void OnWidthChanging(System.Nullable<int> value);
+    partial void OnWidthChanged();
+    partial void OnHeightChanging(System.Nullable<int> value);
+    partial void OnHeightChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public Program_desc()
+		{
+			this._Profile = default(EntityRef<Profile>);
+			this._Program = default(EntityRef<Program>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_program_desc", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_program_desc
+		{
+			get
+			{
+				return this._Id_program_desc;
+			}
+			set
+			{
+				if ((this._Id_program_desc != value))
+				{
+					this.OnId_program_descChanging(value);
+					this.SendPropertyChanging();
+					this._Id_program_desc = value;
+					this.SendPropertyChanged("Id_program_desc");
+					this.OnId_program_descChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", DbType="Int NOT NULL")]
+		public int Id_prof
+		{
+			get
+			{
+				return this._Id_prof;
+			}
+			set
+			{
+				if ((this._Id_prof != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_profChanging(value);
+					this.SendPropertyChanging();
+					this._Id_prof = value;
+					this.SendPropertyChanged("Id_prof");
+					this.OnId_profChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prog", DbType="Int NOT NULL")]
+		public int Id_prog
+		{
+			get
+			{
+				return this._Id_prog;
+			}
+			set
+			{
+				if ((this._Id_prog != value))
+				{
+					if (this._Program.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_progChanging(value);
+					this.SendPropertyChanging();
+					this._Id_prog = value;
+					this.SendPropertyChanged("Id_prog");
+					this.OnId_progChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_X", DbType="Int")]
+		public System.Nullable<int> X
+		{
+			get
+			{
+				return this._X;
+			}
+			set
+			{
+				if ((this._X != value))
+				{
+					this.OnXChanging(value);
+					this.SendPropertyChanging();
+					this._X = value;
+					this.SendPropertyChanged("X");
+					this.OnXChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Y", DbType="Int")]
+		public System.Nullable<int> Y
+		{
+			get
+			{
+				return this._Y;
+			}
+			set
+			{
+				if ((this._Y != value))
+				{
+					this.OnYChanging(value);
+					this.SendPropertyChanging();
+					this._Y = value;
+					this.SendPropertyChanged("Y");
+					this.OnYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width", DbType="Int")]
+		public System.Nullable<int> Width
+		{
+			get
+			{
+				return this._Width;
+			}
+			set
+			{
+				if ((this._Width != value))
+				{
+					this.OnWidthChanging(value);
+					this.SendPropertyChanging();
+					this._Width = value;
+					this.SendPropertyChanged("Width");
+					this.OnWidthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Int")]
+		public System.Nullable<int> Height
+		{
+			get
+			{
+				return this._Height;
+			}
+			set
+			{
+				if ((this._Height != value))
+				{
+					this.OnHeightChanging(value);
+					this.SendPropertyChanging();
+					this._Height = value;
+					this.SendPropertyChanged("Height");
+					this.OnHeightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NChar(20)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Program_desc", Storage="_Profile", ThisKey="Id_prof", OtherKey="Id_prof", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.Program_desc.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.Program_desc.Add(this);
+						this._Id_prof = value.Id_prof;
+					}
+					else
+					{
+						this._Id_prof = default(int);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Program_Program_desc", Storage="_Program", ThisKey="Id_prog", OtherKey="Id_prog", IsForeignKey=true)]
+		public Program Program
+		{
+			get
+			{
+				return this._Program.Entity;
+			}
+			set
+			{
+				Program previousValue = this._Program.Entity;
+				if (((previousValue != value) 
+							|| (this._Program.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Program.Entity = null;
+						previousValue.Program_desc.Remove(this);
+					}
+					this._Program.Entity = value;
+					if ((value != null))
+					{
+						value.Program_desc.Add(this);
+						this._Id_prog = value.Id_prog;
+					}
+					else
+					{
+						this._Id_prog = default(int);
+					}
+					this.SendPropertyChanged("Program");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -421,12 +1050,12 @@ namespace Organizer.Resources
 					if ((previousValue != null))
 					{
 						this._Profile.Entity = null;
-						previousValue.Time_profiles.Remove(this);
+						previousValue.Time_profile.Remove(this);
 					}
 					this._Profile.Entity = value;
 					if ((value != null))
 					{
-						value.Time_profiles.Add(this);
+						value.Time_profile.Add(this);
 						this._Id_prof = value.Id_prof;
 					}
 					else
@@ -434,611 +1063,6 @@ namespace Organizer.Resources
 						this._Id_prof = default(int);
 					}
 					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.App_desc")]
-	public partial class App_desc : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_app_desc;
-		
-		private int _Id_prof;
-		
-		private int _Id_app;
-		
-		private System.Nullable<int> _X;
-		
-		private System.Nullable<int> _Y;
-		
-		private System.Nullable<int> _Width;
-		
-		private System.Nullable<int> _Height;
-		
-		private EntityRef<Program> _App;
-		
-		private EntityRef<Profile> _Profile;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_app_descChanging(int value);
-    partial void OnId_app_descChanged();
-    partial void OnId_profChanging(int value);
-    partial void OnId_profChanged();
-    partial void OnId_appChanging(int value);
-    partial void OnId_appChanged();
-    partial void OnXChanging(System.Nullable<int> value);
-    partial void OnXChanged();
-    partial void OnYChanging(System.Nullable<int> value);
-    partial void OnYChanged();
-    partial void OnWidthChanging(System.Nullable<int> value);
-    partial void OnWidthChanged();
-    partial void OnHeightChanging(System.Nullable<int> value);
-    partial void OnHeightChanged();
-    #endregion
-		
-		public App_desc()
-		{
-			this._App = default(EntityRef<Program>);
-			this._Profile = default(EntityRef<Profile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_app_desc", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_app_desc
-		{
-			get
-			{
-				return this._Id_app_desc;
-			}
-			set
-			{
-				if ((this._Id_app_desc != value))
-				{
-					this.OnId_app_descChanging(value);
-					this.SendPropertyChanging();
-					this._Id_app_desc = value;
-					this.SendPropertyChanged("Id_app_desc");
-					this.OnId_app_descChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", DbType="Int NOT NULL")]
-		public int Id_prof
-		{
-			get
-			{
-				return this._Id_prof;
-			}
-			set
-			{
-				if ((this._Id_prof != value))
-				{
-					if (this._Profile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_profChanging(value);
-					this.SendPropertyChanging();
-					this._Id_prof = value;
-					this.SendPropertyChanged("Id_prof");
-					this.OnId_profChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_app", DbType="Int NOT NULL")]
-		public int Id_app
-		{
-			get
-			{
-				return this._Id_app;
-			}
-			set
-			{
-				if ((this._Id_app != value))
-				{
-					if (this._App.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_appChanging(value);
-					this.SendPropertyChanging();
-					this._Id_app = value;
-					this.SendPropertyChanged("Id_app");
-					this.OnId_appChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_X", DbType="Int")]
-		public System.Nullable<int> X
-		{
-			get
-			{
-				return this._X;
-			}
-			set
-			{
-				if ((this._X != value))
-				{
-					this.OnXChanging(value);
-					this.SendPropertyChanging();
-					this._X = value;
-					this.SendPropertyChanged("X");
-					this.OnXChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Y", DbType="Int")]
-		public System.Nullable<int> Y
-		{
-			get
-			{
-				return this._Y;
-			}
-			set
-			{
-				if ((this._Y != value))
-				{
-					this.OnYChanging(value);
-					this.SendPropertyChanging();
-					this._Y = value;
-					this.SendPropertyChanged("Y");
-					this.OnYChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width", DbType="Int")]
-		public System.Nullable<int> Width
-		{
-			get
-			{
-				return this._Width;
-			}
-			set
-			{
-				if ((this._Width != value))
-				{
-					this.OnWidthChanging(value);
-					this.SendPropertyChanging();
-					this._Width = value;
-					this.SendPropertyChanged("Width");
-					this.OnWidthChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Int")]
-		public System.Nullable<int> Height
-		{
-			get
-			{
-				return this._Height;
-			}
-			set
-			{
-				if ((this._Height != value))
-				{
-					this.OnHeightChanging(value);
-					this.SendPropertyChanging();
-					this._Height = value;
-					this.SendPropertyChanged("Height");
-					this.OnHeightChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_App_desc", Storage="_App", ThisKey="Id_app", OtherKey="Id_app", IsForeignKey=true)]
-		public Program Program
-		{
-			get
-			{
-				return this._App.Entity;
-			}
-			set
-			{
-				Program previousValue = this._App.Entity;
-				if (((previousValue != value) 
-							|| (this._App.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._App.Entity = null;
-						previousValue.App_descs.Remove(this);
-					}
-					this._App.Entity = value;
-					if ((value != null))
-					{
-						value.App_descs.Add(this);
-						this._Id_app = value.Id_app;
-					}
-					else
-					{
-						this._Id_app = default(int);
-					}
-					this.SendPropertyChanged("Program");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_App_desc", Storage="_Profile", ThisKey="Id_prof", OtherKey="Id_prof", IsForeignKey=true)]
-		public Profile Profile
-		{
-			get
-			{
-				return this._Profile.Entity;
-			}
-			set
-			{
-				Profile previousValue = this._Profile.Entity;
-				if (((previousValue != value) 
-							|| (this._Profile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Profile.Entity = null;
-						previousValue.App_descs.Remove(this);
-					}
-					this._Profile.Entity = value;
-					if ((value != null))
-					{
-						value.App_descs.Add(this);
-						this._Id_prof = value.Id_prof;
-					}
-					else
-					{
-						this._Id_prof = default(int);
-					}
-					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Profile")]
-	public partial class Profile : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_prof;
-		
-		private string _Name;
-		
-		private EntitySet<Time_profile> _Time_profiles;
-		
-		private EntitySet<App_desc> _App_descs;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_profChanging(int value);
-    partial void OnId_profChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public Profile()
-		{
-			this._Time_profiles = new EntitySet<Time_profile>(new Action<Time_profile>(this.attach_Time_profiles), new Action<Time_profile>(this.detach_Time_profiles));
-			this._App_descs = new EntitySet<App_desc>(new Action<App_desc>(this.attach_App_descs), new Action<App_desc>(this.detach_App_descs));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_prof", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_prof
-		{
-			get
-			{
-				return this._Id_prof;
-			}
-			set
-			{
-				if ((this._Id_prof != value))
-				{
-					this.OnId_profChanging(value);
-					this.SendPropertyChanging();
-					this._Id_prof = value;
-					this.SendPropertyChanged("Id_prof");
-					this.OnId_profChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(20) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Time_profile", Storage="_Time_profiles", ThisKey="Id_prof", OtherKey="Id_prof")]
-		public EntitySet<Time_profile> Time_profiles
-		{
-			get
-			{
-				return this._Time_profiles;
-			}
-			set
-			{
-				this._Time_profiles.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_App_desc", Storage="_App_descs", ThisKey="Id_prof", OtherKey="Id_prof")]
-		public EntitySet<App_desc> App_descs
-		{
-			get
-			{
-				return this._App_descs;
-			}
-			set
-			{
-				this._App_descs.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Time_profiles(Time_profile entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = this;
-		}
-		
-		private void detach_Time_profiles(Time_profile entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = null;
-		}
-		
-		private void attach_App_descs(App_desc entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = this;
-		}
-		
-		private void detach_App_descs(App_desc entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Time_app")]
-	public partial class Time_app : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_time_app;
-		
-		private int _Id_app;
-		
-		private System.Nullable<System.DateTime> _Time_start;
-		
-		private System.Nullable<System.DateTime> _Time_stop;
-		
-		private EntityRef<Program> _App;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_time_appChanging(int value);
-    partial void OnId_time_appChanged();
-    partial void OnId_appChanging(int value);
-    partial void OnId_appChanged();
-    partial void OnTime_startChanging(System.Nullable<System.DateTime> value);
-    partial void OnTime_startChanged();
-    partial void OnTime_stopChanging(System.Nullable<System.DateTime> value);
-    partial void OnTime_stopChanged();
-    #endregion
-		
-		public Time_app()
-		{
-			this._App = default(EntityRef<Program>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_time_app", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_time_app
-		{
-			get
-			{
-				return this._Id_time_app;
-			}
-			set
-			{
-				if ((this._Id_time_app != value))
-				{
-					this.OnId_time_appChanging(value);
-					this.SendPropertyChanging();
-					this._Id_time_app = value;
-					this.SendPropertyChanged("Id_time_app");
-					this.OnId_time_appChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_app", DbType="Int NOT NULL")]
-		public int Id_app
-		{
-			get
-			{
-				return this._Id_app;
-			}
-			set
-			{
-				if ((this._Id_app != value))
-				{
-					if (this._App.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_appChanging(value);
-					this.SendPropertyChanging();
-					this._Id_app = value;
-					this.SendPropertyChanged("Id_app");
-					this.OnId_appChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_start", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> Time_start
-		{
-			get
-			{
-				return this._Time_start;
-			}
-			set
-			{
-				if ((this._Time_start != value))
-				{
-					this.OnTime_startChanging(value);
-					this.SendPropertyChanging();
-					this._Time_start = value;
-					this.SendPropertyChanged("Time_start");
-					this.OnTime_startChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time_stop", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> Time_stop
-		{
-			get
-			{
-				return this._Time_stop;
-			}
-			set
-			{
-				if ((this._Time_stop != value))
-				{
-					this.OnTime_stopChanging(value);
-					this.SendPropertyChanging();
-					this._Time_stop = value;
-					this.SendPropertyChanged("Time_stop");
-					this.OnTime_stopChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="App_Time_app", Storage="_App", ThisKey="Id_app", OtherKey="Id_app", IsForeignKey=true)]
-		public Program Program
-		{
-			get
-			{
-				return this._App.Entity;
-			}
-			set
-			{
-				Program previousValue = this._App.Entity;
-				if (((previousValue != value) 
-							|| (this._App.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._App.Entity = null;
-						previousValue.Time_apps.Remove(this);
-					}
-					this._App.Entity = value;
-					if ((value != null))
-					{
-						value.Time_apps.Add(this);
-						this._Id_app = value.Id_app;
-					}
-					else
-					{
-						this._Id_app = default(int);
-					}
-					this.SendPropertyChanged("Program");
 				}
 			}
 		}

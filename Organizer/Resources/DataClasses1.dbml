@@ -1,51 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Resources\database.mdf;Integrated Security=True" SettingsObjectName="Organizer.Properties.Settings" SettingsPropertyName="databaseConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.App" Member="Programs">
-    <Type Name="Program">
-      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Path" Type="System.String" DbType="NChar(150)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
-      <Association Name="App_App_desc" Member="App_descs" ThisKey="Id_app" OtherKey="Id_app" Type="App_desc" />
-      <Association Name="App_Time_app" Member="Time_apps" ThisKey="Id_app" OtherKey="Id_app" Type="Time_app" />
+  <Table Name="dbo.Profile" Member="Profile">
+    <Type Name="Profile">
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Profile_Program_desc" Member="Program_desc" ThisKey="Id_prof" OtherKey="Id_prof" Type="Program_desc" />
+      <Association Name="Profile_Time_profile" Member="Time_profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Time_profile" />
     </Type>
   </Table>
-  <Table Name="dbo.Time_profile" Member="Time_profiles">
+  <Table Name="dbo.Time_program" Member="Time_program">
+    <Type Name="Time_program">
+      <Column Name="Id_time_app" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_prog" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Association Name="Program_Time_program" Member="Program" ThisKey="Id_prog" OtherKey="Id_prog" Type="Program" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Program" Member="Program">
+    <Type Name="Program">
+      <Column Name="Id_prog" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="NChar(150)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Association Name="Program_Time_program" Member="Time_program" ThisKey="Id_prog" OtherKey="Id_prog" Type="Time_program" />
+      <Association Name="Program_Program_desc" Member="Program_desc" ThisKey="Id_prog" OtherKey="Id_prog" Type="Program_desc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Program_desc" Member="Program_desc">
+    <Type Name="Program_desc">
+      <Column Name="Id_program_desc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_prog" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="X" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Width" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Height" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Association Name="Profile_Program_desc" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
+      <Association Name="Program_Program_desc" Member="Program" ThisKey="Id_prog" OtherKey="Id_prog" Type="Program" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Time_profile" Member="Time_profile">
     <Type Name="Time_profile">
       <Column Name="Id_time_profile" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Association Name="Profile_Time_profile" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.App_desc" Member="App_descs">
-    <Type Name="App_desc">
-      <Column Name="Id_app_desc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="X" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Width" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Height" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="App_App_desc" Member="Program" Storage="_App" ThisKey="Id_app" OtherKey="Id_app" Type="Program" IsForeignKey="true" />
-      <Association Name="Profile_App_desc" Member="Profile" ThisKey="Id_prof" OtherKey="Id_prof" Type="Profile" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Profile" Member="Profiles">
-    <Type Name="Profile">
-      <Column Name="Id_prof" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Profile_Time_profile" Member="Time_profiles" ThisKey="Id_prof" OtherKey="Id_prof" Type="Time_profile" />
-      <Association Name="Profile_App_desc" Member="App_descs" ThisKey="Id_prof" OtherKey="Id_prof" Type="App_desc" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Time_app" Member="Time_apps">
-    <Type Name="Time_app">
-      <Column Name="Id_time_app" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Id_app" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Time_start" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Time_stop" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Association Name="App_Time_app" Member="Program" Storage="_App" ThisKey="Id_app" OtherKey="Id_app" Type="Program" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
