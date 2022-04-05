@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace Organizer
 {
@@ -58,7 +59,6 @@ namespace Organizer
                 if (MessageBox.Show("Do you want to add a new profile?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     Save_profile(NewProfileTextBox.Text);
-                    MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
                 }
             }
             else
@@ -71,10 +71,18 @@ namespace Organizer
         {
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
-                Profile p = new Profile();
-                p.Name = nazwa;
-                DB.Profile.InsertOnSubmit(p);
-                DB.SubmitChanges();
+                if (!DB.Profile.Any(prof => prof.Name == nazwa))
+                {
+                    Profile p = new Profile();
+                    p.Name = nazwa;
+                    DB.Profile.InsertOnSubmit(p);
+                    DB.SubmitChanges();
+                    MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
+                }
+                else
+                {
+                    MessageBox.Show("Profile named " + nazwa + " already exist", "Error");
+                }
             }
             listProfiles();
         }
@@ -83,7 +91,7 @@ namespace Organizer
         private void Przesun_Click(object sender, RoutedEventArgs e)
         {
             List<Process> procList = new List<Process>();
-            foreach (Process p in listwyb.Items)
+            foreach (Process p in listGrupa.Items)
             {
                 procList.Add(p);
             }
@@ -93,32 +101,73 @@ namespace Organizer
                 procList.Add(s);
             }
 
-            listwyb.ItemsSource = procList;
+            listGrupa.ItemsSource = procList;
         }
 
         private void BttnSaveToProf_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Process p in listwyb.Items)
+            if (profileList.SelectedItem != null)
             {
-                //try
-                //{
-                //    //Process.Start(p.ProcessName);
-                //    DebugBox.Items.Add(p.MainModule.FileName);
-
-                //}
-                //catch { }
-                using (DataClasses1DataContext DB = new DataClasses1DataContext())
+                foreach (Process proc in listGrupa.Items)
                 {
-                    Program pr = new Program
+                    //try
+                    //{
+                    //    //Process.Start(p.ProcessName);
+                    //    DebugBox.Items.Add(p.MainModule.FileName);
+
+                    //}
+                    //catch { }
+                    using (DataClasses1DataContext DB = new DataClasses1DataContext())
                     {
-                        Path = p.MainModule.FileName,
-                        Name = p.ProcessName
-                    };
-                    DB.Program.InsertOnSubmit(pr);
-                    DB.SubmitChanges();
+                        // check if program is already in database, if not, insert it as new row
+                        if (!DB.Program.Any(prog => prog.Name == proc.ProcessName))
+                        {
+                            Program program = new Program
+                            {
+                                Path = proc.MainModule.FileName,
+                                Name = proc.ProcessName
+                            };
+                            DB.Program.InsertOnSubmit(program);
+                            DB.SubmitChanges();
+                        }
+                    }
                 }
+                foreach (Process proc in listGrupa.Items)
+                {
+                    using (DataClasses1DataContext DB = new DataClasses1DataContext())
+                    {
+                        var progFromQuery = from x in DB.Program
+                                            where x.Name == proc.ProcessName
+                                            select x;
+                        var resultProg = new Program();
+                        foreach (var s in progFromQuery)
+                        {
+                            resultProg = s;
+                        }
+
+                        var selProfile = profileList.SelectedItem as Profile;
+                        Program_desc programdesc = new Program_desc
+                        {
+                            Id_prof = selProfile.Id_prof,
+                            Id_prog = resultProg.Id_prog
+                        };
+                        DB.Program_desc.InsertOnSubmit(programdesc);
+                        DB.SubmitChanges();
+                        //MessageBox.Show("Zapisano nowy program "+proc.ProcessName);
+
+                        //foreach (Program_desc test in DB.Program_desc)
+                        //{
+                        //    try
+                        //    {
+                        //        MessageBox.Show(test.Id_prof + " " + test.Id_prog);
+                        //    }
+                        //    catch { }
+                        //}
+                    }
+
+                }
+                //listGrupa.ItemsSource = null;
             }
-            listwyb.ItemsSource = null;
         }
 
         void listProfiles()
@@ -145,6 +194,28 @@ namespace Organizer
                 foreach (Program pr in DB.Program)
                 {
                     MessageBox.Show(pr.Name);
+                }
+            }
+        }
+
+        private void profileSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (profileList.SelectedItem != null)
+            {
+                using (DataClasses1DataContext DB = new DataClasses1DataContext())
+                {
+                    var selProf = profileList.SelectedItem as Profile;
+                    var query = from t1 in DB.Program_desc
+                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
+                                where t3.Name == selProf.Name
+                                select t2;
+                    List<Program> procdescList = new List<Program>();
+                    foreach (var q in query)
+                    {
+                        procdescList.Add(q);
+                    }
+                    listGrupa.ItemsSource = procdescList;
                 }
             }
         }

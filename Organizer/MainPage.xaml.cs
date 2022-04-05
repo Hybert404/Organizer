@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace Organizer
 {
@@ -74,6 +75,22 @@ namespace Organizer
         {
             var selProf = profileListMain.SelectedItem as Profile;
             MessageBox.Show("This button will activate selected profile: " + selProf.Name);
+
+            using (DataClasses1DataContext DB = new DataClasses1DataContext())
+            {
+                var selProfMain = profileListMain.SelectedItem as Profile;
+                var queryMain = from t1 in DB.Program_desc
+                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
+                                where t3.Name == selProfMain.Name
+                                select t2;
+                List<Program> procdescListMain = new List<Program>();
+                foreach (var q in queryMain)
+                {
+                    MessageBox.Show("Starting: " + q.Name);
+                }
+
+            }
         }
     }
 }
