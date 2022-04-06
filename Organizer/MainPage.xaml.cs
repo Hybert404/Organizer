@@ -83,11 +83,12 @@ namespace Organizer
                                 join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
                                 join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
                                 where t3.Name == selProfMain.Name
-                                select t2;
+                                select new{t2, t1};
                 List<Program> procdescListMain = new List<Program>();
                 foreach (var q in queryMain)
                 {
-                    MessageBox.Show("Starting: " + q.Name);
+                    MessageBox.Show("Starting: " + q.t2.Path+q.t1.Status);
+                    
                 }
 
             }

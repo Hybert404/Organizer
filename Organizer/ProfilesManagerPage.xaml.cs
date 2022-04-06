@@ -35,6 +35,25 @@ namespace Organizer
             catch { }
 
         }
+        public string Status()
+        {
+            if (Minima.IsChecked == false & Maxima.IsChecked == false)
+            {
+                string s = "Normal";
+                return s;
+            }
+            else if (Minima.IsChecked == true & Maxima.IsChecked == false)
+            {
+                string s = "Minimalized";
+                return s;
+            }
+            else 
+            {
+                string s = "Maximalized";
+                return s;
+            }
+            
+        }
         public void GetApplications()
         {
             List<Process> procList = new List<Process>();
@@ -144,12 +163,14 @@ namespace Organizer
                         {
                             resultProg = s;
                         }
+                        
 
                         var selProfile = profileList.SelectedItem as Profile;
                         Program_desc programdesc = new Program_desc
                         {
                             Id_prof = selProfile.Id_prof,
-                            Id_prog = resultProg.Id_prog
+                            Id_prog = resultProg.Id_prog,
+                            Status = Status()
                         };
                         DB.Program_desc.InsertOnSubmit(programdesc);
                         DB.SubmitChanges();
@@ -219,5 +240,16 @@ namespace Organizer
                 }
             }
         }
+
+        private void Max_Checked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Min_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
 }

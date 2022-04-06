@@ -63,5 +63,7 @@
         </ListBox>
         <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
         <Button x:Name="BttnlistPrograms" Content="List programs" HorizontalAlignment="Left" Margin="354,269,0,0" VerticalAlignment="Top" Height="29" Width="86" Click="BttnlistPrograms_Click"/>
+        <CheckBox x:Name="Minima" Content="Min" HorizontalAlignment="Left" Height="27" Margin="287,226,0,0" VerticalAlignment="Top" Width="70" Checked="Min_Checked"/>
+        <CheckBox x:Name="Maxima" Content="Max" HorizontalAlignment="Left" Height="25" Margin="287,258,0,0" VerticalAlignment="Top" Width="62" Checked="Max_Checked"/>
     </Grid>
 </Page>
