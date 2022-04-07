@@ -88,7 +88,8 @@ namespace Organizer
                 foreach (var q in queryMain)
                 {
                     MessageBox.Show("Starting: " + q.t2.Path+q.t1.Status);
-                    
+                    //Process.Start("Calculator.exe");
+
                 }
 
             }

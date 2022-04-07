@@ -110,7 +110,7 @@ namespace Organizer
         private void Przesun_Click(object sender, RoutedEventArgs e)
         {
             List<Process> procList = new List<Process>();
-            foreach (Process p in listGrupa.Items)
+            foreach (Process p in listGrupaToSave.Items)
             {
                 procList.Add(p);
             }
@@ -120,14 +120,14 @@ namespace Organizer
                 procList.Add(s);
             }
 
-            listGrupa.ItemsSource = procList;
+            listGrupaToSave.ItemsSource = procList;
         }
 
         private void BttnSaveToProf_Click(object sender, RoutedEventArgs e)
         {
             if (profileList.SelectedItem != null)
             {
-                foreach (Process proc in listGrupa.Items)
+                foreach (Process proc in listGrupaToSave.Items)
                 {
                     //try
                     //{
@@ -151,7 +151,7 @@ namespace Organizer
                         }
                     }
                 }
-                foreach (Process proc in listGrupa.Items)
+                foreach (Process proc in listGrupaToSave.Items)
                 {
                     using (DataClasses1DataContext DB = new DataClasses1DataContext())
                     {
@@ -189,6 +189,7 @@ namespace Organizer
                 }
                 //listGrupa.ItemsSource = null;
             }
+            listProfiles();
         }
 
         void listProfiles()
@@ -241,14 +242,14 @@ namespace Organizer
             }
         }
 
-        private void Max_Checked(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void Min_Checked(object sender, RoutedEventArgs e)
-        {
-
+            if (processList.SelectedItem != null)
+            {
+                var selProc = processList.SelectedItem as Application;
+                MessageBox.Show(" ");
+                
+            }
         }
     }
 
