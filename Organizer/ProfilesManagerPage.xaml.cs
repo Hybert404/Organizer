@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using System;
+//using System.Runtime.InteropServices;
 
 namespace Organizer
 {
@@ -96,7 +98,7 @@ namespace Organizer
                     p.Name = nazwa;
                     DB.Profile.InsertOnSubmit(p);
                     DB.SubmitChanges();
-                    MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
+                    //MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
                 }
                 else
                 {
@@ -129,13 +131,6 @@ namespace Organizer
             {
                 foreach (Process proc in listGrupaToSave.Items)
                 {
-                    //try
-                    //{
-                    //    //Process.Start(p.ProcessName);
-                    //    DebugBox.Items.Add(p.MainModule.FileName);
-
-                    //}
-                    //catch { }
                     using (DataClasses1DataContext DB = new DataClasses1DataContext())
                     {
                         // check if program is already in database, if not, insert it as new row
@@ -174,20 +169,9 @@ namespace Organizer
                         };
                         DB.Program_desc.InsertOnSubmit(programdesc);
                         DB.SubmitChanges();
-                        //MessageBox.Show("Zapisano nowy program "+proc.ProcessName);
-
-                        //foreach (Program_desc test in DB.Program_desc)
-                        //{
-                        //    try
-                        //    {
-                        //        MessageBox.Show(test.Id_prof + " " + test.Id_prog);
-                        //    }
-                        //    catch { }
-                        //}
                     }
 
                 }
-                //listGrupa.ItemsSource = null;
             }
             listProfiles();
         }
@@ -220,7 +204,7 @@ namespace Organizer
             }
         }
 
-        private void profileSelectionChange(object sender, SelectionChangedEventArgs e)
+        public void profileSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             if (profileList.SelectedItem != null)
             {
@@ -240,15 +224,52 @@ namespace Organizer
                     listGrupa.ItemsSource = procdescList;
                 }
             }
+            var selectedProfile = profileList.SelectedItem as Profile;
         }
+
+        private IntPtr FindWindow(string title, int index)
+        {
+            List<Process> l = new List<Process>();
+
+            Process[] tempProcesses;
+            tempProcesses = Process.GetProcesses();
+            foreach (Process proc in tempProcesses)
+            {
+                if (proc.MainWindowTitle == title)
+                {
+                    l.Add(proc);
+                }
+            }
+
+            if (l.Count > index) return l[index].MainWindowHandle;
+            return (IntPtr)0;
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (processList.SelectedItem != null)
             {
-                var selProc = processList.SelectedItem as Application;
+                var selProc = processList.SelectedItem as Process;
+                var x = selProc.MainWindowHandle;
                 MessageBox.Show(" ");
                 
+            }
+        }
+
+        private void BttnAddPathManual_Click(object sender, RoutedEventArgs e)
+        {
+            if (profileList.SelectedItem != null)
+            {
+                FilePathPopUpWindow popup = new FilePathPopUpWindow(profileList.SelectedItem as Profile);
+                popup.Show();
+                popup.Activate();
+                popup.Focus();
+                popup.Topmost = true;
+            }
+            else
+            {
+                MessageBox.Show("Select a profile first", "Error");
             }
         }
     }

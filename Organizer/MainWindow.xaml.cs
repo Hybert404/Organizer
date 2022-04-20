@@ -90,6 +90,9 @@ namespace Organizer
         private void OpenSettings(object sender, RoutedEventArgs e)
         {
             Show();
+            Activate();
+            Focus();
+            Topmost = true;
             WindowState = storedWindowState;
         }
 

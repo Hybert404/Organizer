@@ -11,9 +11,21 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" Height="450" Margin="0,35,0,15" Width="1080" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="Here you can manage your profiles" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Height="42" Width="225"/>
         <Grid Height="200" Margin="10,288,670,-38" Width="400">
-            <TextBlock TextWrapping="Wrap" Height="31" Width="346" FontSize="20" Margin="10,52,44,116"><Run Language="pl-pl" Text="Enter name of a new profile"/></TextBlock>
-            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="170" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,64,0,54"/>
-            <Button Content="Add new profile" HorizontalAlignment="Left" Margin="200,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
+            <TextBlock TextWrapping="Wrap" Height="31" Width="346" FontSize="20" Margin="10,52,44,116"><Run Language="pl-pl" Text="Create a new profile"/></TextBlock>
+            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="170" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,64,0,54" VerticalAlignment="Center"/>
+            <TextBlock IsHitTestVisible="False" Text="Profile name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray" Padding="10,10,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=NewProfileTextBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Button Content="Add new profile" HorizontalAlignment="Left" Margin="190,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
         </Grid>
         <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="848,86,10,86" >
             <ListBox.ItemTemplate>
@@ -80,5 +92,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button x:Name="BttnAddPathManual" HorizontalAlignment="Left" Margin="267,285,0,0" VerticalAlignment="Top" Height="37" Width="111" Click="BttnAddPathManual_Click">
+            <TextBlock Text="Add the file path manually" TextWrapping="Wrap" TextAlignment="Center"/>
+        </Button>
     </Grid>
 </Page>
