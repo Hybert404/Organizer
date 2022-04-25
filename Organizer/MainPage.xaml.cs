@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using System;
 
 namespace Organizer
 {
@@ -87,12 +88,40 @@ namespace Organizer
                 List<Program> procdescListMain = new List<Program>();
                 foreach (var q in queryMain)
                 {
-                    MessageBox.Show("Starting: " + q.t2.Path+q.t1.Status);
-                    //Process.Start("Calculator.exe");
+                    try
+                    {
+                        MessageBox.Show("Starting: " + q.t2.Path + q.t1.Status);
+                        Process processEditor = Process.Start(q.t2.Path);
+                        processEditor.WaitForInputIdle();
 
+                        int left = 100;
+                        int top = 100;
+                        int width = 400;
+                        int height = 450;
+                        
+                        SetWindowPos(processEditor.MainWindowHandle,
+                            HWND_TOP,
+                            left, top,
+                            width, height, 0);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
 
             }
         }
+
+        // HWND Constants
+        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        static readonly IntPtr HWND_TOP = new IntPtr(0);
+        static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
+
+        // P/Invoke
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X,
+           int Y, int cx, int cy, uint uFlags);
     }
 }

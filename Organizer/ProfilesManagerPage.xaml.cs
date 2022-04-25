@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using System;
+using System.Collections.ObjectModel;
 //using System.Runtime.InteropServices;
 
 namespace Organizer
@@ -14,10 +15,15 @@ namespace Organizer
     /// </summary>
     public partial class ProfilesManagerPage : Page
     {
+        public ObservableCollection<Process> ProcessList { get; set; }
+        public ObservableCollection<Process> ListGroupToSave { get; set; }
         public ProfilesManagerPage()
         {
+            ProcessList = new ObservableCollection<Process>();
+            ListGroupToSave = new ObservableCollection<Process>();
             InitializeComponent();
             listProfiles();
+            listGrupaToSave.ItemsSource = ListGroupToSave;
         }
 
         //Listowanie aplikacji
@@ -58,19 +64,20 @@ namespace Organizer
         }
         public void GetApplications()
         {
-            List<Process> procList = new List<Process>();
+            //List<Process> procList = new List<Process>();
+            ProcessList.Clear();
             foreach (Process p in Process.GetProcesses("."))
             {
                 try
                 {
                     if (p.MainWindowTitle.Length > 0)
                     {
-                        procList.Add(p);
+                        ProcessList.Add(p);
                     }
                 }
                 catch { }
             }
-            processList.ItemsSource = procList;
+            processList.ItemsSource = ProcessList;// procList;
         }
 
         private void Bttc_Click_Add_profile(object sender, RoutedEventArgs e)
@@ -111,18 +118,19 @@ namespace Organizer
         //Zapisywanie grupy do profilu
         private void Przesun_Click(object sender, RoutedEventArgs e)
         {
-            List<Process> procList = new List<Process>();
+            //System.Collections.ObjectModel.ObservableCollection<Process> procList = new System.Collections.ObjectModel.ObservableCollection<Process>();
+            ListGroupToSave.Clear();
             foreach (Process p in listGrupaToSave.Items)
             {
-                procList.Add(p);
+                ListGroupToSave.Add(p);
             }
 
             {
                 var s = processList.SelectedItem as Process;
-                procList.Add(s);
+                ListGroupToSave.Add(s);
             }
 
-            listGrupaToSave.ItemsSource = procList;
+            //listGrupaToSave.ItemsSource = ListGroupToSave;
         }
 
         private void BttnSaveToProf_Click(object sender, RoutedEventArgs e)
@@ -221,6 +229,7 @@ namespace Organizer
                     {
                         procdescList.Add(q);
                     }
+                    
                     listGrupa.ItemsSource = procdescList;
                 }
             }
@@ -270,6 +279,15 @@ namespace Organizer
             else
             {
                 MessageBox.Show("Select a profile first", "Error");
+            }
+        }
+
+        private void processList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if(sender is ListBox lbSource && lbSource.SelectedItem != null)
+            {
+                //ObservableCollection<Process> processes = new System.Collections.ObjectModel.ObservableCollection<Process>(lbSource.ItemsSource);
+                ListGroupToSave.Add(lbSource.SelectedItem as Process);
             }
         }
     }

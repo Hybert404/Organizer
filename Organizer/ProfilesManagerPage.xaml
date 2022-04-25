@@ -27,7 +27,7 @@
             </TextBlock>
             <Button Content="Add new profile" HorizontalAlignment="Left" Margin="190,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
         </Grid>
-        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="848,86,10,86" >
+        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="848,86,10,86" MouseDoubleClick="processList_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
