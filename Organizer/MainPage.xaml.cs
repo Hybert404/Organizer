@@ -58,6 +58,28 @@ namespace Organizer
                 profileListMain.ItemsSource = profList;
             }
         }
+        public void profileSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (profileListMain.SelectedItem != null)
+            {
+                using (DataClasses1DataContext DB = new DataClasses1DataContext())
+                {
+                    var selProf = profileListMain.SelectedItem as Profile;
+                    var query = from t1 in DB.Program_desc
+                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
+                                where t3.Name == selProf.Name
+                                select t2;
+                    List<Program> procdescList = new List<Program>();
+                    foreach (var q in query)
+                    {
+                        procdescList.Add(q);
+                    }
+
+                    programList.ItemsSource = procdescList;
+                }
+            }
+        }
 
         private void BttnActivateProfile_Click(object sender, RoutedEventArgs e)
         {

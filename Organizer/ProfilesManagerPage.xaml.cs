@@ -233,7 +233,7 @@ namespace Organizer
                     listGrupa.ItemsSource = procdescList;
                 }
             }
-            var selectedProfile = profileList.SelectedItem as Profile;
+            //var selectedProfile = profileList.SelectedItem as Profile;
         }
 
         private IntPtr FindWindow(string title, int index)
