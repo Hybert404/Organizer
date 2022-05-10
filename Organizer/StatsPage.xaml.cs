@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Organizer.Resources;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace Organizer
 {
@@ -28,6 +29,7 @@ namespace Organizer
             InitializeComponent();
             listPrograms();
             listProfiles();
+
         }
 
         void listPrograms()
@@ -83,4 +85,36 @@ namespace Organizer
             }
         }
     }
+
+    public partial class Fruit
+    {
+        public string Name { get; set; }
+        public Int16 Share { get; set; }
+    }
+    class FruitCollection : System.Collections.ObjectModel.Collection<Fruit>
+    {
+        public FruitCollection()
+        {
+            using (DataClasses1DataContext DB = new DataClasses1DataContext())
+            {
+                List<Time_program> progList = new List<Time_program>();
+
+                foreach (var p in DB.Time_program)
+                {
+                    try
+                    {
+                        TimeSpan diff = (TimeSpan)(p.Time_stop - p.Time_start);
+                        Add(new Fruit { Name = p.Id_time_app.ToString(), Share = (short)diff.Minutes });
+                    }
+                    catch { }
+                }
+   
+            }
+        }
+    }
+
+
+
+
 }
+
