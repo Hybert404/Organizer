@@ -72,12 +72,16 @@ namespace Organizer
                 {
                     var selProg = programsList.SelectedItem as Program;
                     var query = from t1 in DB.Time_program
+                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
                                 where t1.Id_prog == selProg.Id_prog
-                                select t1;
+                                select new { t1, t2 };
                     List<Time_program> times = new List<Time_program>();
                     foreach (var q in query)
                     {
-                        times.Add(q);
+                        times.Add(q.t1);
+                        TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
+                        var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
+                        //FruitCollection.Add(new Fruit { Name = q.t2.Name.ToString(), Time = (short)time });
                     }
 
                     statsList.ItemsSource = times;
@@ -110,9 +114,9 @@ namespace Organizer
     public partial class Fruit
     {
         public string Name { get; set; }
-        public Int16 Share { get; set; }
+        public Int64 Time { get; set; }
     }
-    class FruitCollection : System.Collections.ObjectModel.Collection<Fruit>
+    public class FruitCollection : System.Collections.ObjectModel.Collection<Fruit>
     {
         public FruitCollection()
         {
@@ -126,11 +130,11 @@ namespace Organizer
                     {
                         TimeSpan diff = (TimeSpan)(p.Time_stop - p.Time_start);
                         var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
-                        Add(new Fruit { Name = p.Id_time_app.ToString(), Share = (short)time });
+                        Add(new Fruit { Name = p.Id_time_app.ToString(), Time = (short)time });
                     }
                     catch { }
                 }
-   
+
             }
         }
     }

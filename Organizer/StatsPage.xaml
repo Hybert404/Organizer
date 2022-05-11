@@ -20,7 +20,7 @@
                 <DVC:BarSeries Title="Czas"  
                     ItemsSource="{StaticResource FruitCollection}"  
                     IndependentValueBinding="{Binding Path=Name}"  
-                    DependentValueBinding="{Binding Path=Share}">
+                    DependentValueBinding="{Binding Path=Time}">
                 </DVC:BarSeries>
             </DVC:Chart.Series>
         </DVC:Chart>
