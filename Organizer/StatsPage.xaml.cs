@@ -82,5 +82,26 @@ namespace Organizer
                 }
             }
         }
+
+        private void profileSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (profilesList.SelectedItem != null)
+            {
+                using (DataClasses1DataContext DB = new DataClasses1DataContext())
+                {
+                    var selProf = profilesList.SelectedItem as Profile;
+                    var query = from t1 in DB.Time_profile
+                                where t1.Id_prof == selProf.Id_prof
+                                select t1;
+                    List<Time_profile> times = new List<Time_profile>();
+                    foreach (var q in query)
+                    {
+                        times.Add(q);
+                    }
+
+                    statsList.ItemsSource = times;
+                }
+            }
+        }
     }
 }

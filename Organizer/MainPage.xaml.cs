@@ -153,16 +153,17 @@ namespace Organizer
         {
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
+                // save apps runtime
                 TimeEndProfile = DateTime.Now;
                 TimeSpan diff = TimeEndProfile - TimeStartProfile;
 
-                var queryMain = from t1 in DB.Program_desc
-                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
-                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
-                                where t3.Name == CurrentProfile
-                                select new { t2, t1 };
+                var queryTimeApps = from t1 in DB.Program_desc
+                                    join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                                    join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
+                                    where t3.Name == CurrentProfile
+                                    select new { t2, t1 };
 
-                foreach (var q in queryMain)
+                foreach (var q in queryTimeApps)
                 {
                     try
                     {
@@ -174,6 +175,28 @@ namespace Organizer
                         DB.SubmitChanges();
 
                         MessageBox.Show("Added: " + q.t2.Name + "opened for " + diff.Seconds + " seconds");
+                    }
+                    catch { }
+                }
+
+
+                // save profile runtime
+                var queryTimeProfile = from t1 in DB.Profile
+                                       where t1.Name == CurrentProfile
+                                       select t1;
+
+                foreach (var q in queryTimeProfile)
+                {
+                    try
+                    {
+                        Time_profile tp = new Time_profile();
+                        tp.Id_prof = q.Id_prof;
+                        tp.Time_start = TimeStartProfile;
+                        tp.Time_stop = TimeEndProfile;
+                        DB.Time_profile.InsertOnSubmit(tp);
+                        DB.SubmitChanges();
+
+                        MessageBox.Show("Added profile: " + q.Name + "opened for " + diff.Seconds + " seconds");
                     }
                     catch { }
                 }

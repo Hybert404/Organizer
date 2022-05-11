@@ -77,7 +77,6 @@
         <Button x:Name="BttnlistPrograms" Content="List programs" HorizontalAlignment="Left" Margin="630,270,0,0" VerticalAlignment="Top" Height="30" Width="86" Click="BttnlistPrograms_Click"/>
         <CheckBox x:Name="Minima" Content="Min" HorizontalAlignment="Left" Height="27" Margin="566,238,0,0" VerticalAlignment="Top" Width="70"/>
         <CheckBox x:Name="Maxima" Content="Max" HorizontalAlignment="Left" Height="25" Margin="566,260,0,0" VerticalAlignment="Top" Width="62"/>
-        <Button Content="get parameters" HorizontalAlignment="Left" Margin="451,380,0,0" VerticalAlignment="Top" Height="47" Width="97" Click="Button_Click"/>
         <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="566,86,300,229">
             <ListBox.ItemTemplate>
                 <DataTemplate>
