@@ -81,7 +81,6 @@ namespace Organizer
                         times.Add(q.t1);
                         TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
                         var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
-                        //FruitCollection.Add(new Fruit { Name = q.t2.Name.ToString(), Time = (short)time });
                     }
 
                     statsList.ItemsSource = times;
@@ -111,34 +110,56 @@ namespace Organizer
         }
     }
 
-    public partial class Fruit
+    public partial class PlotElement
     {
         public string Name { get; set; }
         public Int64 Time { get; set; }
     }
-    public class FruitCollection : System.Collections.ObjectModel.Collection<Fruit>
+    public class PlotCollection : System.Collections.ObjectModel.Collection<PlotElement>
     {
-        public FruitCollection()
+        public PlotCollection()
         {
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
-                List<Time_program> progList = new List<Time_program>();
+                //var selProg = programsList.SelectedItem as Program;
 
-                foreach (var p in DB.Time_program)
+                var query = from t1 in DB.Time_program
+                            join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                            select new { t1, t2 };
+
+                var dict = new DefaultDictionary<string, int>();
+
+                foreach (var q in query)
                 {
-                    try
-                    {
-                        TimeSpan diff = (TimeSpan)(p.Time_stop - p.Time_start);
-                        var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
-                        Add(new Fruit { Name = p.Id_time_app.ToString(), Time = (short)time });
-                    }
-                    catch { }
+                    TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
+                    var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
+                    dict[q.t2.Name.ToString()] += time;
+                }
+                foreach (var x in dict)
+                {
+                    Add(new PlotElement { Name = x.Key, Time = (short)x.Value });
                 }
 
             }
         }
     }
-
+    public class DefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
+    {
+        public new TValue this[TKey key]
+        {
+            get
+            {
+                TValue val;
+                if (!TryGetValue(key, out val))
+                {
+                    val = new TValue();
+                    Add(key, val);
+                }
+                return val;
+            }
+            set { base[key] = value; }
+        }
+    }
 
 
 
