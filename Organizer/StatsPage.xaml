@@ -24,8 +24,7 @@
                 </DVC:BarSeries>
             </DVC:Chart.Series>
         </DVC:Chart>
-
-        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="179,69,675,225" Height="156">
+        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="179,69,675,225" Height="156" SelectionChanged="profileSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -56,15 +55,15 @@
         <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="341,241,542,54">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} od - {1} do - {2}">
-                                <Binding Path="Id_time_app"/>
-                                <Binding Path="Time_start"/>
-                                <Binding Path="Time_stop"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id_prof}"/>
+                        <TextBlock Text="{Binding Id_prog}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding Time_start}"/>
+                        <TextBlock Text=" - "/>
+                        <TextBlock Text="{Binding Time_stop}"
+                       HorizontalAlignment="Right"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
