@@ -3,12 +3,27 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Organizer"
+      xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
+      xmlns:local="clr-namespace:Organizer" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StatsPage" Width="1121" Height="500">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="450" Width="1084" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.Resources>
+            <local:FruitCollection x:Key="FruitCollection" />
+        </Grid.Resources>
+
+        <DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="mcChart" Height="250"
+               Background="LightSteelBlue" Margin="570,130,153,70">
+            <DVC:Chart.Series>
+                <DVC:BarSeries Title="Czas"  
+                    ItemsSource="{StaticResource FruitCollection}"  
+                    IndependentValueBinding="{Binding Path=Name}"  
+                    DependentValueBinding="{Binding Path=Share}">
+                </DVC:BarSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
         <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="179,69,675,225" Height="156" SelectionChanged="profileSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -23,7 +38,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="179,240,675,54" Height="156" SelectionChanged="programSelectionChange">
+        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="179,240,765,54" Height="156" SelectionChanged="programSelectionChange">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -37,7 +52,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="512,69,242,54" Height="327">
+        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="341,241,542,54">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
