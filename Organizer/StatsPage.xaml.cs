@@ -104,7 +104,8 @@ namespace Organizer
                     try
                     {
                         TimeSpan diff = (TimeSpan)(p.Time_stop - p.Time_start);
-                        Add(new Fruit { Name = p.Id_time_app.ToString(), Share = (short)diff.Minutes });
+                        var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
+                        Add(new Fruit { Name = p.Id_time_app.ToString(), Share = (short)time });
                     }
                     catch { }
                 }
