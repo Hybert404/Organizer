@@ -47,6 +47,10 @@ namespace Organizer
         {
             Main.Content = new MainPage();
         }
+        private void Button_Click_Stats(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new StatsPage();
+        }
 
         //Funkcje ikony w zasobniku
         void OnClose(object sender, EventArgs args)

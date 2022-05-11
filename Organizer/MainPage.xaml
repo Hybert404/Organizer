@@ -11,8 +11,7 @@
     <Grid Width="800" Height="450" Margin="0,20,0,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Label Content="Debug box" HorizontalAlignment="Left" Margin="25,312,0,0" VerticalAlignment="Top"/>
         <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,343,461,30"/>
-        <Label Content="Tutaj będzie ładne UI" HorizontalAlignment="Left" Margin="400,151,0,0" VerticalAlignment="Top" Height="30" Width="128"/>
-        <ListBox x:Name="profileListMain" HorizontalAlignment="Left" Height="236" Margin="30,63,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListBox x:Name="profileListMain" HorizontalAlignment="Left" Height="236" Margin="30,63,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -27,6 +26,20 @@
         </ListBox>
         <Label Content="Your profiles" HorizontalAlignment="Left" Margin="30,37,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
         <Button x:Name="BttnActivateProfile" Content="Activate profile" HorizontalAlignment="Left" Margin="296,268,0,0" VerticalAlignment="Top" Height="31" Width="104" Click="BttnActivateProfile_Click"/>
+        <ListBox x:Name="programList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="303,63,284,252">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Id: {0} - {1}">
+                                <Binding Path="Id_prog"/>
+                                <Binding Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Page>

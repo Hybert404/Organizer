@@ -87,6 +87,7 @@ namespace Organizer
                 if (MessageBox.Show("Do you want to add a new profile?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     Save_profile(NewProfileTextBox.Text);
+                    NewProfileTextBox.Clear();
                 }
             }
             else
@@ -180,6 +181,7 @@ namespace Organizer
                     }
 
                 }
+                ListGroupToSave.Clear();
             }
             listProfiles();
         }
@@ -233,7 +235,7 @@ namespace Organizer
                     listGrupa.ItemsSource = procdescList;
                 }
             }
-            var selectedProfile = profileList.SelectedItem as Profile;
+            //var selectedProfile = profileList.SelectedItem as Profile;
         }
 
         private IntPtr FindWindow(string title, int index)
@@ -252,18 +254,6 @@ namespace Organizer
 
             if (l.Count > index) return l[index].MainWindowHandle;
             return (IntPtr)0;
-        }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (processList.SelectedItem != null)
-            {
-                var selProc = processList.SelectedItem as Process;
-                var x = selProc.MainWindowHandle;
-                MessageBox.Show(" ");
-                
-            }
         }
 
         private void BttnAddPathManual_Click(object sender, RoutedEventArgs e)
