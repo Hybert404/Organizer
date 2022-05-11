@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Organizer.Resources;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace Organizer
 {
@@ -28,6 +29,7 @@ namespace Organizer
             InitializeComponent();
             listPrograms();
             listProfiles();
+
         }
 
         void listPrograms()
@@ -70,12 +72,15 @@ namespace Organizer
                 {
                     var selProg = programsList.SelectedItem as Program;
                     var query = from t1 in DB.Time_program
+                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
                                 where t1.Id_prog == selProg.Id_prog
-                                select t1;
+                                select new { t1, t2 };
                     List<Time_program> times = new List<Time_program>();
                     foreach (var q in query)
                     {
-                        times.Add(q);
+                        times.Add(q.t1);
+                        TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
+                        var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
                     }
 
                     statsList.ItemsSource = times;
@@ -104,4 +109,59 @@ namespace Organizer
             }
         }
     }
+
+    public partial class PlotElement
+    {
+        public string Name { get; set; }
+        public Int64 Time { get; set; }
+    }
+    public class PlotCollection : System.Collections.ObjectModel.Collection<PlotElement>
+    {
+        public PlotCollection()
+        {
+            using (DataClasses1DataContext DB = new DataClasses1DataContext())
+            {
+                //var selProg = programsList.SelectedItem as Program;
+
+                var query = from t1 in DB.Time_program
+                            join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                            select new { t1, t2 };
+
+                var dict = new DefaultDictionary<string, int>();
+
+                foreach (var q in query)
+                {
+                    TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
+                    var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
+                    dict[q.t2.Name.ToString()] += time;
+                }
+                foreach (var x in dict)
+                {
+                    Add(new PlotElement { Name = x.Key, Time = (short)x.Value });
+                }
+
+            }
+        }
+    }
+    public class DefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
+    {
+        public new TValue this[TKey key]
+        {
+            get
+            {
+                TValue val;
+                if (!TryGetValue(key, out val))
+                {
+                    val = new TValue();
+                    Add(key, val);
+                }
+                return val;
+            }
+            set { base[key] = value; }
+        }
+    }
+
+
+
 }
+
