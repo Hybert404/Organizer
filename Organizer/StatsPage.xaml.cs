@@ -29,7 +29,6 @@ namespace Organizer
             InitializeComponent();
             listPrograms();
             listProfiles();
-
         }
 
         void listPrograms()
@@ -76,6 +75,7 @@ namespace Organizer
                                 where t1.Id_prog == selProg.Id_prog
                                 select new { t1, t2 };
                     List<Time_program> times = new List<Time_program>();
+
                     foreach (var q in query)
                     {
                         times.Add(q.t1);
@@ -132,8 +132,9 @@ namespace Organizer
                 foreach (var q in query)
                 {
                     TimeSpan diff = (TimeSpan)(q.t1.Time_stop - q.t1.Time_start);
-                    var time = diff.Hours * 3600 + diff.Minutes * 60 + diff.Seconds;
-                    dict[q.t2.Name.ToString()] += time;
+                    var time = (int)diff.TotalSeconds;
+                    string trim = q.t2.Name.Replace(" ", "");
+                    dict[trim] += time;
                 }
                 foreach (var x in dict)
                 {
