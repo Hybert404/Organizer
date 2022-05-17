@@ -9,9 +9,10 @@
         StateChanged="OnStateChanged" 
         IsVisibleChanged="OnIsVisibleChanged"
         Closing="OnClose"
+        SizeToContent="WidthAndHeight"
         Name="focusScope1"
         FocusManager.IsFocusScope="True"
-        Title="Organizer" Height="540" Width="1080" MinHeight="540" MinWidth="810">
+        Title="Organizer" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
 
     <Window.Resources>
         <ContextMenu x:Key="NotifierContextMenu"
@@ -19,14 +20,69 @@
             <MenuItem Header="Close" Click="Menu_Close"/>
             <MenuItem Header="Open Settings" Click="OpenSettings"/>
         </ContextMenu>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="0,0,0,0">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
-    <Grid x:Name="Okno">
-        <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Top">
-            <Button Content="Main Window" MinWidth="100" Margin="20,10,0,0" Click="Bttn_Click_MainWindow" />
-            <Button Content="Manage Profiles" MinWidth="100" Margin="20,10,0,0" Click="Bttn_Click_ManageProfiles" />
-            <Button Content="Stats" MinWidth="100" Margin="20,10,0,0" Click="Button_Click_Stats" />
+    <Grid x:Name="Okno" Margin="0,0,0,0">
+        <StackPanel Orientation="Horizontal" Height="60" VerticalAlignment="Top" Background="SkyBlue">
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Main Window" MinWidth="100" Margin="10,10,10,10" Height="40" Click="Bttn_Click_MainWindow" Background="#295BE5" Foreground="White" />
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Manage Profiles" MinWidth="100" Margin="10,10,10,10" Height="40" Click="Bttn_Click_ManageProfiles" Background="#295BE5" Foreground="White"/>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Stats" MinWidth="100" Margin="10,10,10,10" Height="40" Click="Button_Click_Stats" Background="#295BE5" Foreground="White" />
         </StackPanel>
-        <Frame x:Name="Main" Margin="0, 35, 0, 0" NavigationUIVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Frame x:Name="Main" Margin="0, 60, 0, 0" NavigationUIVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

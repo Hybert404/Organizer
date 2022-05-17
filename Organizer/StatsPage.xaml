@@ -6,10 +6,16 @@
       xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
       xmlns:local="clr-namespace:Organizer" 
       mc:Ignorable="d" 
-      d:DesignHeight="450"
-      Title="StatsPage" Height="500">
+      FocusManager.IsFocusScope="True"
+      Title="StatsPage" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="450" Width="1084" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.Resources>
             <local:PlotCollection x:Key="PlotCollection" />
         </Grid.Resources>
@@ -31,8 +37,8 @@
                 </DVC:BarSeries>
             </DVC:Chart.Series>
         </DVC:Chart>-->
-        
-        
+
+
         <DVC:Chart Title="Sample Chart" Margin="585,69,46,54" BorderBrush="{x:Null}">
             <DVC:Chart.Axes>
                 <DVC:LinearAxis Minimum="0" Orientation="Y" ShowGridLines="True" />
@@ -49,9 +55,9 @@
                 </Style>
             </DVC:Chart.LegendStyle>
         </DVC:Chart>
-        
-        
-        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,69,855,225" Height="156" SelectionChanged="profileSelectionChanged">
+
+
+        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,69,884,225" Height="156" SelectionChanged="profileSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -65,7 +71,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,240,855,54" Height="156" SelectionChanged="programSelectionChange">
+        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,240,884,54" Height="156" SelectionChanged="programSelectionChange">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -79,7 +85,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="243,69,533,54">
+        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="290,69,533,54">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

@@ -15,6 +15,7 @@ namespace Organizer
         {
             InitializeComponent();
             Main.Content = new MainPage();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
             //DataClasses1DataContext DB = new DataClasses1DataContext();
 
             //using (DataClasses1DataContext dbContext = new DataClasses1DataContext())
