@@ -6,14 +6,90 @@
       xmlns:local="clr-namespace:Organizer"
       mc:Ignorable="d" 
       d:DesignHeight="500"
-      Title="ProfilesManagerPage" Width="1121" HorizontalAlignment="Center" VerticalAlignment="Center">
+      Title="ProfilesManagerPage" Height="560" Width="1080" MinWidth="1080" MinHeight="560" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Page.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="15" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="0,0,0,0">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" Height="450" Margin="0,35,0,15" Width="1080" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Label Content="Here you can manage your profiles" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Height="42" Width="225"/>
-        <Grid Height="200" Margin="10,288,670,-38" Width="400">
-            <TextBlock TextWrapping="Wrap" Height="31" Width="346" FontSize="20" Margin="10,52,44,116"><Run Language="pl-pl" Text="Create a new profile"/></TextBlock>
-            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="170" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,64,0,54" VerticalAlignment="Center"/>
-            <TextBlock IsHitTestVisible="False" Text="Profile name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray" Padding="10,10,0,0">
+    <Grid Background="White" Height="560" Margin="0,0,0,0" Width="1080" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Content="Here you can manage your profiles" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Height="50" Width="492" FontFamily="Arial"
+               FontSize="30"/>
+        <Grid Margin="10,351,756,12" RenderTransformOrigin="0.309,0.507">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="249*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap" Height="35" FontSize="20" Margin="10,10,110,156" Grid.ColumnSpan="2"><Run FontFamily="Arial"
+               FontSize="20" Language="pl-pl" Text="Create a new profile"/></TextBlock>
+            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="173" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock IsHitTestVisible="False" Text="Profile name" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,46,0,0" Foreground="DarkGray" Padding="10,10,0,0" Grid.ColumnSpan="2">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -25,9 +101,30 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <Button Content="Add new profile" HorizontalAlignment="Left" Margin="190,88,0,0" VerticalAlignment="Top" Height="34" Width="116" Click="Bttc_Click_Add_profile"/>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Add new profile" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="Bttc_Click_Add_profile" Grid.ColumnSpan="2"/>
         </Grid>
-        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="848,86,10,86" MouseDoubleClick="processList_MouseDoubleClick">
+        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="825,90,15,220" MouseDoubleClick="processList_MouseDoubleClick" RenderTransformOrigin="0.5,0.5" Height="250" Width="240">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.078"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.265"/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -41,9 +138,23 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="ListProcBttn" Content="List procesess" HorizontalAlignment="Left" Margin="848,369,0,0" VerticalAlignment="Top" Height="38" Width="118" Click="ListProcBttn_Click"/>
-        <Label Content="Running processes" HorizontalAlignment="Left" Margin="848,60,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="listGrupa" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="287,86,580,229">
+        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="ListProcBttn" Content="List procesess" HorizontalAlignment="Left" Margin="888,350,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="ListProcBttn_Click"/>
+        <Label Content="Running processes" HorizontalAlignment="Left" Margin="827,57,0,0" VerticalAlignment="Top" FontFamily="Arial"
+               FontSize="20"/>
+        <ListBox x:Name="listGrupa" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="274,90,566,220" Height="250" Width="240">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -57,10 +168,24 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Group of processes" HorizontalAlignment="Left" Margin="287,60,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
-        <Button x:Name="Przesun" Content="&lt;" HorizontalAlignment="Left" Height="24" Margin="805,108,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click"/>
-        <Button x:Name="BttnSaveToProf" Content="Save to profile" HorizontalAlignment="Left" Height="27" Margin="620,226,0,0" VerticalAlignment="Top" Width="106" Click="BttnSaveToProf_Click"/>
-        <ListBox x:Name="profileList" HorizontalAlignment="Left" Height="236" Margin="10,86,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
+        <Label Content="Group of processes" HorizontalAlignment="Left" Margin="274,56,0,0" VerticalAlignment="Top" Width="190" Height="35" FontFamily="Arial"
+               FontSize="20"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="Przesun" Background="#295BE5" Foreground="White" Content="&lt;" HorizontalAlignment="Left" Height="24" Margin="784,90,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click" RenderTransformOrigin="0.539,0.522"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnSaveToProf" Background="#295BE5" Foreground="White" Height="40" Width="120" Content="Save to profile" HorizontalAlignment="Left"  Margin="600,351,0,0" VerticalAlignment="Top" Click="BttnSaveToProf_Click"/>
+        <ListBox x:Name="profileList" HorizontalAlignment="Left" Height="250" Margin="10,90,0,0" VerticalAlignment="Top" Width="240" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -73,11 +198,25 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+               FontSize="20"/>
         <Button x:Name="BttnlistPrograms" Content="List programs" HorizontalAlignment="Left" Margin="630,270,0,0" VerticalAlignment="Top" Height="30" Width="86" Click="BttnlistPrograms_Click"/>
         <CheckBox x:Name="Minima" Content="Min" HorizontalAlignment="Left" Height="27" Margin="566,238,0,0" VerticalAlignment="Top" Width="70"/>
         <CheckBox x:Name="Maxima" Content="Max" HorizontalAlignment="Left" Height="25" Margin="566,260,0,0" VerticalAlignment="Top" Width="62"/>
-        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="566,86,300,229">
+        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="540,90,300,220" Height="250" Width="240">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -91,7 +230,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="BttnAddPathManual" HorizontalAlignment="Left" Margin="267,285,0,0" VerticalAlignment="Top" Height="37" Width="111" Click="BttnAddPathManual_Click">
+        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="BttnAddPathManual" HorizontalAlignment="Left" Margin="329,350,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="BttnAddPathManual_Click">
             <TextBlock Text="Add the file path manually" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
     </Grid>

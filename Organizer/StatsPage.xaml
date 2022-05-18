@@ -9,7 +9,7 @@
       FocusManager.IsFocusScope="True"
       Title="StatsPage" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalAlignment="Stretch">
+    <Grid Background="white" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -39,7 +39,7 @@
         </DVC:Chart>-->
 
 
-        <DVC:Chart Title="Sample Chart" Margin="585,69,46,54" BorderBrush="{x:Null}">
+        <DVC:Chart Title="Sample Chart" Margin="600,70,31,53" BorderBrush="{x:Null}">
             <DVC:Chart.Axes>
                 <DVC:LinearAxis Minimum="0" Orientation="Y" ShowGridLines="True" />
             </DVC:Chart.Axes>
@@ -56,8 +56,22 @@
             </DVC:Chart.LegendStyle>
         </DVC:Chart>
 
-
-        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,69,884,225" Height="156" SelectionChanged="profileSelectionChanged">
+        <Label Content="Profiles" HorizontalAlignment="Left" Margin="25,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+               FontSize="20"/>
+        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,52,825,308" SelectionChanged="profileSelectionChanged" Height="200" Width="230" HorizontalAlignment="Left">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -71,7 +85,22 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="40,240,884,54" Height="156" SelectionChanged="programSelectionChange">
+        <Label Content="Apps" HorizontalAlignment="Left" Margin="25,271,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+               FontSize="20"/>
+        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,306,0,54" Height="200" Width="230" HorizontalAlignment="Left" SelectionChanged="programSelectionChange">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -85,7 +114,22 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="290,69,533,54">
+        <Label Content="Time stats" HorizontalAlignment="Left" Margin="283,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+               FontSize="20"/>
+        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="283,52,569,308">
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
