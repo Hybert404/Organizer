@@ -65,7 +65,15 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="White" RenderTransformOrigin="0.57,0.509" >
+    <Grid Background="White" RenderTransformOrigin="0.57,0.509" HorizontalAlignment="Center" Width="1082" >
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0.032"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>

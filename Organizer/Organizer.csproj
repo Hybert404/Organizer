@@ -58,7 +58,7 @@
       <HintPath>..\packages\DotNetProjects.WpfToolkit.DataVisualization.6.1.94\lib\net40\DotNetProjects.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
@@ -88,12 +88,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>databaseDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Enums\PlotCollectionType.cs" />
+    <Compile Include="Enums\UnitType.cs" />
     <Compile Include="FilePathPopUpWindow.xaml.cs">
       <DependentUpon>FilePathPopUpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProgramTimeInfo.cs" />
     <Compile Include="ProfilesManagerPage.xaml.cs">
       <DependentUpon>ProfilesManagerPage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Services\ChartService.cs" />
+    <Compile Include="Services\DbService.cs" />
+    <Compile Include="Services\ProcessMonitoringService.cs" />
     <Compile Include="StatsPage.xaml.cs">
       <DependentUpon>StatsPage.xaml</DependentUpon>
     </Compile>

@@ -7,6 +7,8 @@ using System.Linq;
 using System;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Threading;
+using Organizer.Services;
 
 namespace Organizer
 {
@@ -29,10 +31,14 @@ namespace Organizer
 
     public partial class MainPage : Page
     {
+        private DbService _dbService;
+        private List<Program> _currentProfilePrograms;
         //public ObservableCollection<AppTimer> Timers { get; set; }
         public ObservableCollection<Process> ProcessList { get; set; }
+       
         public MainPage()
         {
+            _dbService = new DbService();
             InitializeComponent();
             listProfilesMain();
             ProcessList = new ObservableCollection<Process>();
@@ -62,22 +68,15 @@ namespace Organizer
         {
             if (profileListMain.SelectedItem != null)
             {
-                using (DataClasses1DataContext DB = new DataClasses1DataContext())
-                {
-                    var selProf = profileListMain.SelectedItem as Profile;
-                    var query = from t1 in DB.Program_desc
-                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
-                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
-                                where t3.Name == selProf.Name
-                                select t2;
-                    List<Program> procdescList = new List<Program>();
-                    foreach (var q in query)
-                    {
-                        procdescList.Add(q);
-                    }
+                if ((profileListMain.SelectedItem as Profile).Name == CurrentProfile)
+                    BttnActivateProfile.Content = "Deactivate Profile";
+                else
+                    BttnActivateProfile.Content = "Activate Profile";
 
-                    programList.ItemsSource = procdescList;
-                }
+                var selProf = profileListMain.SelectedItem as Profile;
+                _currentProfilePrograms = _dbService.GetProgramListByProfileName(selProf.Name);
+
+                programList.ItemsSource = _currentProfilePrograms;
             }
         }
 
@@ -88,16 +87,19 @@ namespace Organizer
             {
                 CurrentProfile = selProf.Name;
                 ActivateProfile();
+                BttnActivateProfile.Content = "Deactivate Profile";
             }
             else if(CurrentProfile == selProf.Name)
             {
-                MessageBox.Show("Profile " + CurrentProfile + "is already activated");
+                DeactivateProfile();
+                BttnActivateProfile.Content = "Activate Profile";
             }
             else
             {
                 MessageBox.Show("Stopping profile: " + CurrentProfile + ", and activating: " + selProf.Name);
                 CurrentProfile = selProf.Name;
                 ActivateProfile();
+                this.BttnActivateProfile.Content = "Deactivate Profile";
             }
         }
 
@@ -106,19 +108,13 @@ namespace Organizer
             using (DataClasses1DataContext DB = new DataClasses1DataContext())
             {
                 var selProfMain = profileListMain.SelectedItem as Profile;
-                var queryMain = from t1 in DB.Program_desc
-                                join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
-                                join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
-                                where t3.Name == selProfMain.Name
-                                select new { t2, t1 };
                 List<Program> procdescListMain = new List<Program>();
 
-                foreach (var q in queryMain)
+                foreach (var q in _currentProfilePrograms)
                 {
                     try
                     {
-                        //MessageBox.Show("Starting: " + q.t2.Path + q.t1.Status);
-                        Process processEditor = Process.Start(q.t2.Path);
+                        Process processEditor = Process.Start(q.Path);
                         processEditor.WaitForInputIdle();
 
                         int left = 100;
@@ -126,6 +122,7 @@ namespace Organizer
                         int width = 400;
                         int height = 450;
 
+                        Thread.Sleep(2000);
                         SetWindowPos(processEditor.MainWindowHandle,
                             HWND_TOP,
                             left, top,
@@ -136,7 +133,7 @@ namespace Organizer
                         //Timers.Add(at);
 
                         //GetProcessByName(q.t2.Name);
-                        string trim = q.t2.Name.Replace(" ", "");
+                        string trim = q.Name.Replace(" ", "");
 
                         foreach (var process in Process.GetProcessesByName(trim))
                         {
@@ -174,7 +171,7 @@ namespace Organizer
                         DB.Time_program.InsertOnSubmit(tp);
                         DB.SubmitChanges();
 
-                        MessageBox.Show("Added: " + q.t2.Name + "opened for " + diff.Seconds + " seconds");
+                        this.DebugBox.Items.Add($"Added: {q.t2.Name} opened for {diff.Seconds} seconds");
                     }
                     catch { }
                 }
@@ -196,7 +193,7 @@ namespace Organizer
                         DB.Time_profile.InsertOnSubmit(tp);
                         DB.SubmitChanges();
 
-                        MessageBox.Show("Added profile: " + q.Name + "opened for " + diff.Seconds + " seconds");
+                        this.DebugBox.Items.Add($"Added profile: {q.Name} opened for {diff.Seconds} seconds");
                     }
                     catch { }
                 }

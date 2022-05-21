@@ -9,7 +9,7 @@
       FocusManager.IsFocusScope="True"
       Title="StatsPage" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
 
-    <Grid Background="white" VerticalAlignment="Stretch">
+    <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -38,27 +38,28 @@
             </DVC:Chart.Series>
         </DVC:Chart>-->
 
+        <ScrollViewer x:Name="chartScrollViewer">
+            <DVC:Chart Title="Sample Chart" Margin="25,228,98,10" BorderBrush="{x:Null}" Name="runTimeChart">
+                <DVC:Chart.Axes>
+                    <DVC:LinearAxis Minimum="0" Orientation="Y" ShowGridLines="True" />
+                </DVC:Chart.Axes>
+                <DVC:ColumnSeries
+                                  IndependentValueBinding="{Binding Path=Name}"  
+                                  DependentValueBinding="{Binding Path=Time}" />
 
-        <DVC:Chart Title="Sample Chart" Margin="600,70,31,53" BorderBrush="{x:Null}">
-            <DVC:Chart.Axes>
-                <DVC:LinearAxis Minimum="0" Orientation="Y" ShowGridLines="True" />
-            </DVC:Chart.Axes>
-            <DVC:ColumnSeries ItemsSource="{StaticResource PlotCollection}"
-                              IndependentValueBinding="{Binding Path=Name}"  
-                              DependentValueBinding="{Binding Path=Time}" />
-
-            <DVC:Chart.LegendStyle>
-                <Style TargetType="Control">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Setter Property="Width" Value="0"/>
-                    <Setter Property="Height" Value="0"/>
-                </Style>
-            </DVC:Chart.LegendStyle>
-        </DVC:Chart>
+                <DVC:Chart.LegendStyle>
+                    <Style TargetType="Control">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="Width" Value="0"/>
+                        <Setter Property="Height" Value="0"/>
+                    </Style>
+                </DVC:Chart.LegendStyle>
+            </DVC:Chart>
+        </ScrollViewer>
 
         <Label Content="Profiles" HorizontalAlignment="Left" Margin="25,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,52,825,308" SelectionChanged="profileSelectionChanged" Height="200" Width="230" HorizontalAlignment="Left">
+        <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,52,0,384" SelectionChanged="profileSelectionChanged" Width="230" HorizontalAlignment="Left">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -85,9 +86,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Apps" HorizontalAlignment="Left" Margin="25,271,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+        <Label Content="Apps" HorizontalAlignment="Left" Margin="280,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,306,0,54" Height="200" Width="230" HorizontalAlignment="Left" SelectionChanged="programSelectionChange">
+        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="275,52,0,384" Width="230" HorizontalAlignment="Left" SelectionChanged="programSelectionChange">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -114,9 +115,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Time stats" HorizontalAlignment="Left" Margin="283,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
+        <Label Content="Time stats" HorizontalAlignment="Left" Margin="523,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="283,52,569,308">
+        <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="523,52,98,384">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -144,6 +145,10 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateFrom" Margin="428,199,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"/>
+        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateTo" Margin="550,199,0,0" VerticalAlignment="Top"/>
+        <Label Content="Date Range:" HorizontalAlignment="Left" Margin="348,197,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.586,0"/>
+        <Button Content="Reload" HorizontalAlignment="Left" Name="bttn_reload" Margin="676,198,0,0" VerticalAlignment="Top" Height="24" Width="88" Click="Button_Click"/>
 
     </Grid>
 </Page>
