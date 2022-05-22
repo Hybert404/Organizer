@@ -8,6 +8,131 @@
       mc:Ignorable="d" 
       FocusManager.IsFocusScope="True"
       Title="StatsPage" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
+    <Page.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="15" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="0,0,0,0">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="10"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <!--<Setter Property="Margin" Value="3"/>-->
+
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border x:Name="rectangle" Background="WhiteSmoke" Height="14" SnapsToDevicePixels="True" Width="{TemplateBinding Width}" CornerRadius="60"/>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="rectangle" Value="#295BE5"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="true">
+                                <Setter Property="Background" TargetName="rectangle" Value="#295BE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StyleCalanderDayButton" TargetType="{x:Type CalendarDayButton}">
+            <Setter Property="Height" Value="20"></Setter>
+            <Setter Property="Width" Value="20"></Setter>
+        </Style>
+        <Style x:Key="StyleCalanderButton" TargetType="{x:Type CalendarButton}">
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Width" Value="30"></Setter>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style x:Key="StyleCalendar" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                        <Viewbox Height="200" Width="200" >
+                            <CalendarItem x:Name="PART_CalendarItem" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" FontStretch="Expanded"  >
+                            </CalendarItem>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CalendarDayButtonStyle"  Value="{StaticResource StyleCalanderDayButton}"></Setter>
+            <Setter Property="CalendarButtonStyle"  Value="{StaticResource StyleCalanderButton}"></Setter>
+            <Setter Property="Foreground" Value="#295BE5"/>
+            <Setter Property="Background" Value="White"/>
+
+        </Style>
+
+    </Page.Resources>
 
     <Grid Background="white">
         <Grid.ColumnDefinitions>
@@ -21,11 +146,12 @@
         </Grid.Resources>
 
         <ScrollViewer x:Name="chartScrollViewer">
-            <DVC:Chart Title="Sample Chart" Margin="25,228,98,10" BorderBrush="{x:Null}" Name="runTimeChart">
+            <DVC:Chart Title="Time of app or profiles" Margin="25,228,98,10" BorderBrush="{x:Null}" Name="runTimeChart" Background="Transparent">
+
                 <DVC:Chart.Axes>
                     <DVC:LinearAxis Minimum="0" Orientation="Y" ShowGridLines="True" />
                 </DVC:Chart.Axes>
-                <DVC:ColumnSeries
+                <DVC:ColumnSeries  
                                   IndependentValueBinding="{Binding Path=Name}"  
                                   DependentValueBinding="{Binding Path=Time}" />
 
@@ -43,9 +169,52 @@
                FontSize="20"/>
         <ListBox x:Name="profilesList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="25,52,0,384" SelectionChanged="profileSelectionChanged" Width="230" HorizontalAlignment="Left">
             <ListBox.Resources>
+                <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Background" Value="#295BE5"/>
+                    <Setter Property="BorderBrush" Value="#295BE5"/>
+                    <Setter Property="Padding" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                        <RowDefinition Height="0.00001*"/>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" CornerRadius="10"/>
+                                    <!--<RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" Margin="0,0,0,-20">    
+                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                    <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" HorizontalAlignment="Left" Width="17" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbVertical}" Margin="1"/>
+                                        </Track.Thumb>
+
+                                    </Track>
+                                    <!--<RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}"  Margin="0,-20,0,0">    
+                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
+
+
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Background" Value="White"/>
                     <Style.Resources>
@@ -69,11 +238,54 @@
         </ListBox>
         <Label Content="Apps" HorizontalAlignment="Left" Margin="280,17,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="275,52,0,384" Width="230" HorizontalAlignment="Left" SelectionChanged="programSelectionChange">
+        <ListBox x:Name="programsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="275,52,0,437" Width="230" HorizontalAlignment="Left" SelectionChanged="programSelectionChange">
             <ListBox.Resources>
+                <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Background" Value="#295BE5"/>
+                    <Setter Property="BorderBrush" Value="#295BE5"/>
+                    <Setter Property="Padding" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                        <RowDefinition Height="0.00001*"/>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" CornerRadius="10"/>
+                                    <!--<RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" Margin="0,0,0,-20">    
+                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                    <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" HorizontalAlignment="Left" Width="17" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbVertical}" Margin="1"/>
+                                        </Track.Thumb>
+
+                                    </Track>
+                                    <!--<RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}"  Margin="0,-20,0,0">    
+                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
+
+
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Background" Value="White"/>
                     <Style.Resources>
@@ -99,6 +311,47 @@
                FontSize="20"/>
         <ListBox x:Name="statsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="523,52,98,384">
             <ListBox.Resources>
+                <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Background" Value="#295BE5"/>
+                    <Setter Property="BorderBrush" Value="#295BE5"/>
+                    <Setter Property="Padding" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                        <RowDefinition Height="0.00001*"/>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" CornerRadius="10"/>
+                                    <!--<RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" Margin="0,0,0,-20">    
+                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                    <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" HorizontalAlignment="Left" Width="17" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbVertical}" Margin="1"/>
+                                        </Track.Thumb>
+
+                                    </Track>
+                                    <!--<RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}"  Margin="0,-20,0,0">    
+                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
@@ -122,10 +375,26 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateFrom" Margin="428,199,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" CalendarClosed="dp_chartDateFrom_CalendarClosed"/>
-        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateTo" Margin="550,199,0,0" VerticalAlignment="Top" CalendarClosed="dp_chartDateTo_CalendarClosed" />
+
+        <DatePicker CalendarStyle="{StaticResource StyleCalendar}" HorizontalAlignment="Left" Name="dp_chartDateFrom" Margin="422,197,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" CalendarClosed="dp_chartDateFrom_CalendarClosed" Background="Transparent" Width="130" Height="30" Visibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <DatePicker.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="Padding" Value="10"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateTo" Margin="571,197,0,0" VerticalAlignment="Top" CalendarClosed="dp_chartDateTo_CalendarClosed" Background="Transparent" Width="130" Height="30" Visibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+            <DatePicker.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="Padding" Value="10"/>
+                </Style>
+
+            </DatePicker.Resources>
+        </DatePicker>
         <Label Content="Date Range:" HorizontalAlignment="Left" Margin="348,197,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.586,0"/>
-        <Button Content="Reload" HorizontalAlignment="Left" Name="bttn_reload" Margin="676,198,0,0" VerticalAlignment="Top" Height="24" Width="88" Click="Button_Click"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" Content="Reload" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Name="bttn_reload" Margin="723,197,0,0" VerticalAlignment="Top" Height="30" Width="88" Click="Button_Click"/>
 
     </Grid>
 </Page>
