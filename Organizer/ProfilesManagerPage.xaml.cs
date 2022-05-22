@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Linq;
 using System;
 using System.Collections.ObjectModel;
@@ -42,25 +43,25 @@ namespace Organizer
             catch { }
 
         }
-        public string Status()
-        {
-            if (Minima.IsChecked == false & Maxima.IsChecked == false)
-            {
-                string s = "Normal";
-                return s;
-            }
-            else if (Minima.IsChecked == true & Maxima.IsChecked == false)
-            {
-                string s = "Minimalized";
-                return s;
-            }
-            else 
-            {
-                string s = "Maximalized";
-                return s;
-            }
+        //public string Status()
+        //{
+        //    if (Minima.IsChecked == false & Maxima.IsChecked == false)
+        //    {
+        //        string s = "Normal";
+        //        return s;
+        //    }
+        //    else if (Minima.IsChecked == true & Maxima.IsChecked == false)
+        //    {
+        //        string s = "Minimalized";
+        //        return s;
+        //    }
+        //    else 
+        //    {
+        //        string s = "Maximalized";
+        //        return s;
+        //    }
             
-        }
+        //}
         public void GetApplications()
         {
             ProcessList.Clear();
@@ -116,16 +117,21 @@ namespace Organizer
         //Zapisywanie grupy do profilu
         private void Przesun_Click(object sender, RoutedEventArgs e)
         {
-            ListGroupToSave.Clear();
-            foreach (Process p in listGrupaToSave.Items)
+            if (processList.SelectedItem != null)
             {
-                ListGroupToSave.Add(p);
-            }
+                //ListGroupToSave.Clear();
+                //foreach (Process p in listGrupaToSave.Items)
+                //{
+                //    ListGroupToSave.Add(p);
+                //}
 
-            {
-                var s = processList.SelectedItem as Process;
-                ListGroupToSave.Add(s);
+                //{
+                //    var s = processList.SelectedItem as Process;
+                //    ListGroupToSave.Add(s);
+                //}
+                ListGroupToSave.Add(processList.SelectedItem as Process);
             }
+            
         }
 
         private void BttnSaveToProf_Click(object sender, RoutedEventArgs e)
@@ -161,14 +167,17 @@ namespace Organizer
                         {
                             resultProg = s;
                         }
-                        
 
                         var selProfile = profileList.SelectedItem as Profile;
                         Program_desc programdesc = new Program_desc
                         {
                             Id_prof = selProfile.Id_prof,
                             Id_prog = resultProg.Id_prog,
-                            Status = Status()
+                            Status = "Maximized",
+                            X = 500,
+                            Y = 500,
+                            Height = 200,
+                            Width = 400
                         };
                         DB.Program_desc.InsertOnSubmit(programdesc);
                         DB.SubmitChanges();
@@ -197,17 +206,6 @@ namespace Organizer
             }
         }
 
-        private void BttnlistPrograms_Click(object sender, RoutedEventArgs e)
-        {
-            using (DataClasses1DataContext DB = new DataClasses1DataContext())
-            {
-                foreach (Program pr in DB.Program)
-                {
-                    MessageBox.Show(pr.Name);
-                }
-            }
-        }
-
         public void profileSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             if (profileList.SelectedItem != null)
@@ -219,8 +217,9 @@ namespace Organizer
                                 join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
                                 join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
                                 where t3.Name == selProf.Name
-                                select t2;
-                    List<Program> procdescList = new List<Program>();
+                                select t1;
+                    // tymczasowa zmiana z t2 na t1, program na program_desc
+                    List<Program_desc> procdescList = new List<Program_desc>();
                     foreach (var q in query)
                     {
                         procdescList.Add(q);
@@ -274,4 +273,29 @@ namespace Organizer
         }
     }
 
+    // Watermark for textboxes
+    public class TextInputToVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            // Always test MultiValueConverter inputs for non-null
+            // (to avoid crash bugs for views in the designer)
+            if (values[0] is bool && values[1] is bool)
+            {
+                bool hasText = !(bool)values[0];
+                bool hasFocus = (bool)values[1];
+
+                if (hasFocus || hasText)
+                    return Visibility.Collapsed;
+            }
+
+            return Visibility.Visible;
+        }
+
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

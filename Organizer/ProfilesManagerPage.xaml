@@ -17,6 +17,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightGray" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="Black" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2,0" />
+        </Style>
+        
         <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
@@ -38,7 +48,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" CornerRadius="15" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="0,0,0,0">
+                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="0,0,0,0">
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -103,7 +113,7 @@
             </TextBlock>
             <Button Style="{DynamicResource RoundedButtonStyle}" Content="Add new profile" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="Bttc_Click_Add_profile" Grid.ColumnSpan="2"/>
         </Grid>
-        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="825,90,15,220" MouseDoubleClick="processList_MouseDoubleClick" RenderTransformOrigin="0.5,0.5" Height="250" Width="240">
+        <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="558,90,15,358" MouseDoubleClick="processList_MouseDoubleClick" RenderTransformOrigin="0.5,0.5">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -138,8 +148,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="ListProcBttn" Content="List procesess" HorizontalAlignment="Left" Margin="888,350,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="ListProcBttn_Click"/>
-        <Label Content="Running processes" HorizontalAlignment="Left" Margin="827,57,0,0" VerticalAlignment="Top" FontFamily="Arial"
+        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="ListProcBttn" Content="List procesess" HorizontalAlignment="Left" Margin="947,205,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="ListProcBttn_Click"/>
+        <Label Content="Running processes" HorizontalAlignment="Left" Margin="558,59,0,0" VerticalAlignment="Top" FontFamily="Arial"
                FontSize="20"/>
         <ListBox x:Name="listGrupa" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="274,90,566,220" Height="250" Width="240">
             <ListBox.Resources>
@@ -159,8 +169,14 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0}">
-                                <Binding Path="Name"/>
+                            <MultiBinding StringFormat="{}{0} {1} {2} {3} {4} {5}">
+                                <!--<Binding Path="Name"/>-->
+                                <Binding Path="Id_prog"/>
+                                <Binding Path="X"/>
+                                <Binding Path="Y"/>
+                                <Binding Path="Height"/>
+                                <Binding Path="Width"/>
+                                <Binding Path="Status"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
@@ -169,8 +185,8 @@
         </ListBox>
         <Label Content="Group of processes" HorizontalAlignment="Left" Margin="274,56,0,0" VerticalAlignment="Top" Width="190" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="Przesun" Background="#295BE5" Foreground="White" Content="&lt;" HorizontalAlignment="Left" Height="24" Margin="784,90,0,0" VerticalAlignment="Top" Width="38" Click="Przesun_Click" RenderTransformOrigin="0.539,0.522"/>
-        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnSaveToProf" Background="#295BE5" Foreground="White" Height="40" Width="120" Content="Save to profile" HorizontalAlignment="Left"  Margin="600,351,0,0" VerticalAlignment="Top" Click="BttnSaveToProf_Click"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="Przesun" Background="#295BE5" Foreground="White" Content="▼" HorizontalAlignment="Left" Height="40" Margin="558,205,0,0" VerticalAlignment="Top" Width="40" Click="Przesun_Click" RenderTransformOrigin="0.539,0.522"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnSaveToProf" Background="#295BE5" Foreground="White" Height="40" Width="120" Content="Save to profile" HorizontalAlignment="Left"  Margin="947,474,0,0" VerticalAlignment="Top" Click="BttnSaveToProf_Click"/>
         <ListBox x:Name="profileList" HorizontalAlignment="Left" Height="250" Margin="10,90,0,0" VerticalAlignment="Top" Width="240" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
             <ListBox.Resources>
                 <Style TargetType="Border">
@@ -199,10 +215,7 @@
         </ListBox>
         <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <Button x:Name="BttnlistPrograms" Content="List programs" HorizontalAlignment="Left" Margin="630,270,0,0" VerticalAlignment="Top" Height="30" Width="86" Click="BttnlistPrograms_Click"/>
-        <CheckBox x:Name="Minima" Content="Min" HorizontalAlignment="Left" Height="27" Margin="566,238,0,0" VerticalAlignment="Top" Width="70"/>
-        <CheckBox x:Name="Maxima" Content="Max" HorizontalAlignment="Left" Height="25" Margin="566,260,0,0" VerticalAlignment="Top" Width="62"/>
-        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="540,90,300,220" Height="250" Width="240">
+        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="558,250,13,89">
             <ListBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -218,14 +231,56 @@
             </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat=" {0} - {1}">
-                                <Binding Path="ProcessName"/>
-                                <Binding Path="MainWindowTitle"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Path=ProcessName}"/>
+
+                        <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Grid.Column="1">
+                            <TextBlock Text="X" Foreground="{StaticResource brushWatermarkForeground}" Visibility="{Binding ElementName=propertiesLeft, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center"/>
+                            <TextBox Name="propertiesLeft" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                        </Grid>
+                        <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Grid.Column="2">
+                            <TextBlock Text="Y" Foreground="{StaticResource brushWatermarkForeground}" Visibility="{Binding ElementName=propertiesTop, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center"/>
+                            <TextBox Name="propertiesTop" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                        </Grid>
+                        <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Grid.Column="3">
+                            <TextBlock Text="Height" Foreground="{StaticResource brushWatermarkForeground}" Visibility="{Binding ElementName=propertiesHeight, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center"/>
+                            <TextBox Name="propertiesHeight" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                        </Grid>
+                        <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" Grid.Column="4">
+                            <TextBlock Text="Width" Foreground="{StaticResource brushWatermarkForeground}" Visibility="{Binding ElementName=propertiesWidth, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center"/>
+                            <TextBox Name="propertiesWidth" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                        </Grid>
+                        
+                        <!--<TextBox  x:Name="tbNodeID" IsReadOnly="False" AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right" Height="25" Width="90" VerticalAlignment="Center" >
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="IsReadOnly" Value="False" />
+                                        </Trigger>
+                                        <Trigger Property="IsFocused" Value="False">
+                                            <Setter Property="IsReadOnly" Value="True" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>-->
+
+                        <ComboBox x:Name="propertiesStatus" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" SelectedItem="Normal" SelectedIndex="0" IsSynchronizedWithCurrentItem="True">
+                            <ComboBoxItem Content="Normal" Tag="0" />
+                            <ComboBoxItem Content="Minimized" Tag="1" />
+                            <ComboBoxItem Content="Maximized" Tag="2" />
+                        </ComboBox>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -102,10 +102,17 @@ namespace Organizer
                         Process processEditor = Process.Start(q.Path);
                         processEditor.WaitForInputIdle();
 
-                        int left = 100;
-                        int top = 100;
-                        int width = 400;
-                        int height = 450;
+                        var query = from t1 in DB.Program_desc
+                                    join t2 in DB.Program on t1.Id_prog equals t2.Id_prog
+                                    join t3 in DB.Profile on t1.Id_prof equals t3.Id_prof
+                                    where t3.Name == selProfMain.Name
+                                    && t2.Name == q.Name
+                                    select t1;
+
+                        int left = query.First().X ?? 0;
+                        int top = query.First().Y ?? 0;
+                        int width = query.First().Width ?? 0;
+                        int height = query.First().Height ?? 0;
 
                         Thread.Sleep(2000);
                         SetWindowPos(processEditor.MainWindowHandle,
