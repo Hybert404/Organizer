@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Linq;
 using System;
 using System.Collections.ObjectModel;
-//using System.Runtime.InteropServices;
 
 namespace Organizer
 {
@@ -64,7 +63,6 @@ namespace Organizer
         }
         public void GetApplications()
         {
-            //List<Process> procList = new List<Process>();
             ProcessList.Clear();
             foreach (Process p in Process.GetProcesses("."))
             {
@@ -106,7 +104,6 @@ namespace Organizer
                     p.Name = nazwa;
                     DB.Profile.InsertOnSubmit(p);
                     DB.SubmitChanges();
-                    //MessageBox.Show("New profile named " + NewProfileTextBox.Text + " added.");
                 }
                 else
                 {
@@ -119,7 +116,6 @@ namespace Organizer
         //Zapisywanie grupy do profilu
         private void Przesun_Click(object sender, RoutedEventArgs e)
         {
-            //System.Collections.ObjectModel.ObservableCollection<Process> procList = new System.Collections.ObjectModel.ObservableCollection<Process>();
             ListGroupToSave.Clear();
             foreach (Process p in listGrupaToSave.Items)
             {
@@ -130,8 +126,6 @@ namespace Organizer
                 var s = processList.SelectedItem as Process;
                 ListGroupToSave.Add(s);
             }
-
-            //listGrupaToSave.ItemsSource = ListGroupToSave;
         }
 
         private void BttnSaveToProf_Click(object sender, RoutedEventArgs e)
@@ -235,7 +229,6 @@ namespace Organizer
                     listGrupa.ItemsSource = procdescList;
                 }
             }
-            //var selectedProfile = profileList.SelectedItem as Profile;
         }
 
         private IntPtr FindWindow(string title, int index)
@@ -276,7 +269,6 @@ namespace Organizer
         {
             if(sender is ListBox lbSource && lbSource.SelectedItem != null)
             {
-                //ObservableCollection<Process> processes = new System.Collections.ObjectModel.ObservableCollection<Process>(lbSource.ItemsSource);
                 ListGroupToSave.Add(lbSource.SelectedItem as Process);
             }
         }

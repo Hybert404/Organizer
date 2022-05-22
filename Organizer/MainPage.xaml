@@ -126,7 +126,7 @@
         </ListBox>
         <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Width="178" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnActivateProfile" Content="Activate profile" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Height="40" Width="104" Click="BttnActivateProfile_Click" Background="#295BE5" Foreground="White" />
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnActivateProfile" Content="Activate Profile" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Height="40" Width="104" Click="BttnActivateProfile_Click" Background="#295BE5" Foreground="White" />
         <ListBox x:Name="programList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="294,57,517,267" HorizontalAlignment="Left" Height="236" VerticalAlignment="Top" Width="252">
             <ListBox.Resources>
                 <Style TargetType="Border">
@@ -145,8 +145,7 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="Id: {0} - {1}">
-                                <Binding Path="Id_prog"/>
+                            <MultiBinding StringFormat="{}{0}">
                                 <Binding Path="Name"/>
                             </MultiBinding>
                         </TextBlock.Text>

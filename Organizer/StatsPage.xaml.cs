@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using Organizer.Services;
 using Organizer.Enums;
 using System.Windows.Controls.DataVisualization.Charting;
+using System.Windows.Forms;
 
 namespace Organizer
 {
@@ -116,6 +117,16 @@ namespace Organizer
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            loadChart(_currentType, _refreshItemId, _selectedItemName);
+        }
+
+        private void dp_chartDateFrom_CalendarClosed(object sender, System.Windows.RoutedEventArgs e)
+        {
+            loadChart(_currentType, _refreshItemId, _selectedItemName);
+        }
+
+        private void dp_chartDateTo_CalendarClosed(object sender, System.Windows.RoutedEventArgs e)
         {
             loadChart(_currentType, _refreshItemId, _selectedItemName);
         }

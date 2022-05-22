@@ -20,24 +20,6 @@
             <local:PlotCollection x:Key="PlotCollection" />
         </Grid.Resources>
 
-        <!--<DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="mcChart" Margin="574,25,10,25" BorderBrush="{x:Null}">
-            <DVC:Chart.Series>
-                <DVC:BarSeries Title="Runtime"  
-                    ItemsSource="{StaticResource PlotCollection}"  
-                    IndependentValueBinding="{Binding Path=Name}"  
-                    DependentValueBinding="{Binding Path=Time}">
-                    <DVC:BarSeries.LegendItemStyle >
-                        <Style TargetType="DVC:LegendItem">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </Style>
-                    </DVC:BarSeries.LegendItemStyle>
-                    <DVC:BarSeries.DependentRangeAxis>
-                        <DVC:LogarithmicAxis Minimum="0" Maximum="200"/>
-                    </DVC:BarSeries.DependentRangeAxis>
-                </DVC:BarSeries>
-            </DVC:Chart.Series>
-        </DVC:Chart>-->
-
         <ScrollViewer x:Name="chartScrollViewer">
             <DVC:Chart Title="Sample Chart" Margin="25,228,98,10" BorderBrush="{x:Null}" Name="runTimeChart">
                 <DVC:Chart.Axes>
@@ -77,8 +59,7 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} - {1}">
-                                <Binding Path="Id_prof"/>
+                            <MultiBinding StringFormat="{}{0}">
                                 <Binding Path="Name"/>
                             </MultiBinding>
                         </TextBlock.Text>
@@ -106,8 +87,7 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} - {1}">
-                                <Binding Path="Id_prog"/>
+                            <MultiBinding StringFormat="{}{0}">
                                 <Binding Path="Name"/>
                             </MultiBinding>
                         </TextBlock.Text>
@@ -134,19 +114,16 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Id_prof}"/>
-                        <TextBlock Text="{Binding Id_prog}"/>
-                        <TextBlock Text=" "/>
-                        <TextBlock Text="{Binding Time_start}"/>
-                        <TextBlock Text=" - "/>
-                        <TextBlock Text="{Binding Time_stop}"
+                        <TextBlock Text="{Binding Path=Time_start, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                        <TextBlock Text="  —  "/>
+                        <TextBlock Text="{Binding Path=Time_stop, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"
                        HorizontalAlignment="Right"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateFrom" Margin="428,199,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"/>
-        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateTo" Margin="550,199,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateFrom" Margin="428,199,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" CalendarClosed="dp_chartDateFrom_CalendarClosed"/>
+        <DatePicker HorizontalAlignment="Left" Name="dp_chartDateTo" Margin="550,199,0,0" VerticalAlignment="Top" CalendarClosed="dp_chartDateTo_CalendarClosed" />
         <Label Content="Date Range:" HorizontalAlignment="Left" Margin="348,197,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.586,0"/>
         <Button Content="Reload" HorizontalAlignment="Left" Name="bttn_reload" Margin="676,198,0,0" VerticalAlignment="Top" Height="24" Width="88" Click="Button_Click"/>
 

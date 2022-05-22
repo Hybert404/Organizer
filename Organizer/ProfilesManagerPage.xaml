@@ -72,8 +72,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Content="Here you can manage your profiles" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Height="50" Width="492" FontFamily="Arial"
-               FontSize="30"/>
+        <!--<Label Content="Profiles manager" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Height="50" Width="240" FontFamily="Arial"
+               FontSize="30"/>-->
         <Grid Margin="10,351,756,12" RenderTransformOrigin="0.309,0.507">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65*"/>
@@ -159,8 +159,7 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}Id: {0} - {1}">
-                                <Binding Path="Id_prog"/>
+                            <MultiBinding StringFormat="{}{0}">
                                 <Binding Path="Name"/>
                             </MultiBinding>
                         </TextBlock.Text>

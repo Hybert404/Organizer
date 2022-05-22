@@ -16,24 +16,10 @@ namespace Organizer
     /// Interaction logic for MainPage.xaml
     /// </summary>
 
-    //public struct AppTimer
-    //{
-    //    public int Id_prog;
-    //    public DateTime TimeStart;
-    //    public DateTime TimeEnd;
-    //    public AppTimer(int id_prog, DateTime endtime = default(DateTime))
-    //    {
-    //        Id_prog = id_prog;
-    //        TimeStart = DateTime.Now;
-    //        TimeEnd = endtime;
-    //    }
-    //}
-
     public partial class MainPage : Page
     {
         private DbService _dbService;
         private List<Program> _currentProfilePrograms;
-        //public ObservableCollection<AppTimer> Timers { get; set; }
         public ObservableCollection<Process> ProcessList { get; set; }
        
         public MainPage()
@@ -42,7 +28,6 @@ namespace Organizer
             InitializeComponent();
             listProfilesMain();
             ProcessList = new ObservableCollection<Process>();
-            //Timers = new ObservableCollection<AppTimer>();
         }
         public string CurrentProfile = null;
         public DateTime TimeStartProfile;
@@ -129,10 +114,7 @@ namespace Organizer
                             width, height, 0);
 
                         TimeStartProfile = DateTime.Now;
-                        //AppTimer at = new AppTimer(q.t2.Id_prog);
-                        //Timers.Add(at);
 
-                        //GetProcessByName(q.t2.Name);
                         string trim = q.Name.Replace(" ", "");
 
                         foreach (var process in Process.GetProcessesByName(trim))
@@ -203,7 +185,7 @@ namespace Organizer
 
         private void Process_Exited(object sender, System.EventArgs e)
         {
-            MessageBox.Show("process exited");
+            //MessageBox.Show("process exited");
             if (CurrentProfile != null)
             {
                 DeactivateProfile();
