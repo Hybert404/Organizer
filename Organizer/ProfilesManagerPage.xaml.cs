@@ -271,6 +271,11 @@ namespace Organizer
                 ListGroupToSave.Add(lbSource.SelectedItem as Process);
             }
         }
+
+        private void listGrupaToSave_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     // Watermark for textboxes
