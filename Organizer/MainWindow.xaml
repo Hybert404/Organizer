@@ -12,7 +12,7 @@
         SizeToContent="WidthAndHeight"
         Name="focusScope1"
         FocusManager.IsFocusScope="True"
-        Title="Organizer" Height="560" Width="1080" MinWidth="1080" MinHeight="560">
+        Title="Organizer" Height="650" Width="1100" MinWidth="1100" MinHeight="650">
 
     <Window.Resources>
         <ContextMenu x:Key="NotifierContextMenu"

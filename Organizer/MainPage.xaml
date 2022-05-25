@@ -116,9 +116,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Content="Debug box" HorizontalAlignment="Left" Margin="10,355,0,0" VerticalAlignment="Top" FontFamily="Arial"
-               FontSize="20"/>
-        <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,388,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="252" Height="162">
+        <Label Content="Debug box" HorizontalAlignment="Left" Margin="10,355,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Visibility="Hidden"/>
+        <ListBox x:Name="DebugBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="41,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="524" Height="117">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
@@ -174,78 +173,7 @@
                 </Style>
             </ListBox.Resources>
         </ListBox>
-        <ListBox x:Name="profileListMain" HorizontalAlignment="Left" Height="236" Margin="10,57,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
-            <ListBox.Resources>
-                <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
-                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-                </Style>
-                <Style TargetType="{x:Type ScrollBar}">
-                    <Setter Property="Background" Value="#295BE5"/>
-                    <Setter Property="BorderBrush" Value="#295BE5"/>
-                    <Setter Property="Padding" Value="1"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ScrollBar}">
-                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
-                                        <RowDefinition Height="0.00001*"/>
-                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
-                                    </Grid.RowDefinitions>
-                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" CornerRadius="10"/>
-                                    <!--<RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" Margin="0,0,0,-20">    
-                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
-                            </RepeatButton>-->
-                                    <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
-                                        <Track.DecreaseRepeatButton>
-                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" HorizontalAlignment="Left" Width="17" />
-                                        </Track.DecreaseRepeatButton>
-                                        <Track.IncreaseRepeatButton>
-                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
-                                        </Track.IncreaseRepeatButton>
-                                        <Track.Thumb>
-                                            <Thumb Style="{StaticResource ScrollBarThumbVertical}" Margin="1"/>
-                                        </Track.Thumb>
-
-                                    </Track>
-                                    <!--<RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}"  Margin="0,-20,0,0">    
-                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
-                            </RepeatButton>-->
-                                </Grid>
-
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Background" Value="White"/>
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </ListBox.Resources>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0}">
-                                <Binding Path="Name"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
-        </ListBox>
-        <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Width="178" Height="35" FontFamily="Arial"
-               FontSize="20"/>
-        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnActivateProfile" Content="Activate Profile" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Height="40" Width="104" Click="BttnActivateProfile_Click" Background="#295BE5" Foreground="White" />
-        <ListBox x:Name="programList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="294,57,517,267" HorizontalAlignment="Left" Height="236" VerticalAlignment="Top" Width="252">
+        <ListBox x:Name="profileListMain" HorizontalAlignment="Left" Height="236" Margin="42,81,0,0" VerticalAlignment="Top" Width="252" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="profileSelectionChange">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
@@ -311,8 +239,86 @@
                     </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+
         </ListBox>
-        <Label Content="Apps in profile" HorizontalAlignment="Left" Margin="294,22,0,0" VerticalAlignment="Top" Width="226" Height="35" FontFamily="Arial"
+        <Label Content="Your profiles" HorizontalAlignment="Left" Margin="46,47,0,0" VerticalAlignment="Top" Width="178" Height="35" FontFamily="Arial"
+               FontSize="20"/>
+        <Button Style="{DynamicResource RoundedButtonStyle}" x:Name="BttnActivateProfile" Content="Activate Profile" HorizontalAlignment="Left" Margin="41,322,0,0" VerticalAlignment="Top" Height="40" Width="104" Click="BttnActivateProfile_Click" Background="#295BE5" Foreground="White" />
+        <ListBox x:Name="programList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="318,80,0,0" HorizontalAlignment="Left" Height="236" VerticalAlignment="Top" Width="252">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Background" Value="#295BE5"/>
+                    <Setter Property="BorderBrush" Value="#295BE5"/>
+                    <Setter Property="Padding" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                        <RowDefinition Height="0.00001*"/>
+                                        <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" CornerRadius="10"/>
+                                    <!--<RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" Margin="0,0,0,-20">    
+                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                    <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" HorizontalAlignment="Left" Width="17" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbVertical}" Margin="1"/>
+                                        </Track.Thumb>
+
+                                    </Track>
+                                    <!--<RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}"  Margin="0,-20,0,0">    
+                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>    
+                            </RepeatButton>-->
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Apps in profile" HorizontalAlignment="Left" Margin="320,45,0,0" VerticalAlignment="Top" Width="226" Height="35" FontFamily="Arial"
+            FontSize="20" />
+        <Label Content="What is Organizer?&#xD;&#xA;" HorizontalAlignment="Left" Margin="642,45,0,0" VerticalAlignment="Top" Width="222" Height="35" FontFamily="Arial"
             FontSize="20"/>
+        <Label Margin="643,80,76,69">
+            <Label.Content>
+                <AccessText TextWrapping="Wrap" Text="It is a free application that improves your work&#xA;by managing programs (opening programs / files, managing the size of windows and their position). It counts the time spent in certain programs and program groups and allows you to display statistics over a given period of time.&#xA;&#xA;Just simply create a profile in Manage Profiles tab, open your programs and click 'List programs'. Then assign your programs with desired parameters to the profile. &#xA;Now you can activate the selected profile and all programs will start.&#xA;If you want to check statistics, go to the Stats tab." FontSize="16"/>
+            </Label.Content>
+        </Label>
     </Grid>
 </Page>
