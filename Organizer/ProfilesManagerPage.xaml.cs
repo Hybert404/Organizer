@@ -1,4 +1,5 @@
 ﻿using Organizer.Resources;
+using Organizer.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -15,10 +16,12 @@ namespace Organizer
     /// </summary>
     public partial class ProfilesManagerPage : Page
     {
+        private DbService _dbService;
         public ObservableCollection<Process> ProcessList { get; set; }
         public ObservableCollection<Process> ListGroupToSave { get; set; }
         public ProfilesManagerPage()
         {
+            _dbService = new DbService();
             ProcessList = new ObservableCollection<Process>();
             ListGroupToSave = new ObservableCollection<Process>();
             InitializeComponent();
@@ -93,6 +96,44 @@ namespace Organizer
             {
                 MessageBox.Show("Please enter a profile name");
             }
+        }
+        private void Bttc_Click_Delete_profile(object sender, RoutedEventArgs e)
+        {
+            using (DataClasses1DataContext DB = new DataClasses1DataContext())
+            {
+                if (profileList.SelectedItem != null)
+                {
+                    var selProfile = profileList.SelectedItem as Profile;
+                    var prof = _dbService.GetProfileByName(selProfile.Name);
+                    var profTimes = _dbService.GetAllProfileTimeListByProfileId(prof.Id_prof);
+
+                    foreach(var p in profTimes)
+                    {
+                        DB.Time_profile.DeleteOnSubmit(p);
+                        //DB.SubmitChanges();
+                    }
+
+                    var profProgramDesc = _dbService.GetProgramDescByProfileId(prof.Id_prof);
+                    foreach (var p in profProgramDesc)
+                    {
+                        DB.Program_desc.DeleteOnSubmit(p);
+                        //DB.SubmitChanges();
+                    }
+
+
+                    var deleteProfileQuery = from x in DB.Profile
+                                      where x.Name == selProfile.Name
+                                      select x;
+                    MessageBox.Show(selProfile.Name);
+                    foreach(var q in deleteProfileQuery)
+                    {
+                        DB.Profile.DeleteOnSubmit(q);
+                        //DB.SubmitChanges();
+                    }
+                    DB.SubmitChanges();
+                }
+            }
+            listProfiles();
         }
 
         void Save_profile(string nazwa)
@@ -176,8 +217,8 @@ namespace Organizer
                             Status = "Maximized",
                             X = 500,
                             Y = 500,
-                            Height = 200,
-                            Width = 400
+                            Height = 500,
+                            Width = 500
                         };
                         DB.Program_desc.InsertOnSubmit(programdesc);
                         DB.SubmitChanges();
@@ -272,10 +313,6 @@ namespace Organizer
             }
         }
 
-        private void listGrupaToSave_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 
     // Watermark for textboxes

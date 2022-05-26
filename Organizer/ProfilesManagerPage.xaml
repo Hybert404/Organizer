@@ -258,7 +258,7 @@
                             <Trigger Property="IsHighlighted" Value="true">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#295BE5"/>
                                 <Setter TargetName="Border" Property="Background" Value="#FFBEE6FD"/>
-                                
+
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -277,14 +277,14 @@
         </Grid.RowDefinitions>
         <!--<Label Content="Profiles manager" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Height="50" Width="240" FontFamily="Arial"
                FontSize="30"/>-->
-        <Grid Margin="10,351,756,12" RenderTransformOrigin="0.309,0.507">
+        <Grid Margin="10,396,756,-32" RenderTransformOrigin="0.309,0.507">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65*"/>
                 <ColumnDefinition Width="249*"/>
             </Grid.ColumnDefinitions>
             <TextBlock TextWrapping="Wrap" Height="35" FontSize="20" Margin="10,10,110,156" Grid.ColumnSpan="2"><Run FontFamily="Arial"
                FontSize="20" Language="pl-pl" Text="Create a new profile"/></TextBlock>
-            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="173" Height="33" FontSize="20" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <TextBox x:Name="NewProfileTextBox" TextWrapping="Wrap" Width="173" Height="39" FontSize="20" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -304,7 +304,8 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Add new profile" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="Bttc_Click_Add_profile" Grid.ColumnSpan="2"/>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Add new profile" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Margin="124,45,0,0" VerticalAlignment="Top" Height="40" Width="121" Click="Bttc_Click_Add_profile" Grid.Column="1"/>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Content="Delete profile" Background="#295BE5" Foreground="White" HorizontalAlignment="Left" Margin="63,-51,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="Bttc_Click_Delete_profile" Grid.ColumnSpan="2"/>
         </Grid>
         <ListBox x:Name="processList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="558,90,15,358" MouseDoubleClick="processList_MouseDoubleClick" RenderTransformOrigin="0.5,0.5">
             <ListBox.Resources>
@@ -545,7 +546,7 @@
         </ListBox>
         <Label Content="Your profiles" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="200" Height="35" FontFamily="Arial"
                FontSize="20"/>
-        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="558,250,13,89" SelectionChanged="listGrupaToSave_SelectionChanged">
+        <ListBox x:Name="listGrupaToSave" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="558,250,13,89">
             <ListBox.Resources>
                 <Style TargetType="{x:Type ListBox}" x:Key="{x:Type ListBox}" >
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
@@ -675,7 +676,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="BttnAddPathManual" HorizontalAlignment="Left" Margin="329,350,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="BttnAddPathManual_Click">
+        <Button Style="{DynamicResource RoundedButtonStyle}" Background="#295BE5" Foreground="White" x:Name="BttnAddPathManual" HorizontalAlignment="Left" Margin="334,345,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="BttnAddPathManual_Click">
             <TextBlock Text="Add the file path manually" TextWrapping="Wrap" TextAlignment="Center"/>
         </Button>
     </Grid>

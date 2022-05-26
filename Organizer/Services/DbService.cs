@@ -25,6 +25,10 @@ namespace Organizer.Services
         {
             return _context.Time_profile.Where(tp => tp.Id_prof == id && tp.Time_start >= startDate && tp.Time_start <= endDate).ToList();
         }
+        public List<Time_profile> GetAllProfileTimeListByProfileId(int id)
+        {
+            return _context.Time_profile.Where(tp => tp.Id_prof == id).ToList();
+        }
 
         public Profile GetProfileByName(string name)
         {
@@ -69,6 +73,11 @@ namespace Organizer.Services
                         StopTime = t.Time_stop
                     }
                 ).ToList();
+        }
+        public List<Program_desc> GetProgramDescByProfileId(int id)
+        {
+            var profile = _context.Profile.Where(x => x.Id_prof == id).FirstOrDefault();
+            return _context.Program_desc.Where(x => x.Id_prof == id).ToList();
         }
     }
 }
